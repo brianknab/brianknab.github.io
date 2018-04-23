@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-04-23T09:37:52-05:00</updated><id>http://localhost:4000/</id><title type="html">B K</title><subtitle>statistics, programming, philosophy</subtitle><entry><title type="html">Simple linear regression part one - nothing stochastic in sight</title><link href="http://localhost:4000/regression/2018/04/22/simple-linear-regression.html" rel="alternate" type="text/html" title="Simple linear regression part one - nothing stochastic in sight" /><published>2018-04-22T00:00:00-05:00</published><updated>2018-04-22T00:00:00-05:00</updated><id>http://localhost:4000/regression/2018/04/22/simple-linear-regression</id><content type="html" xml:base="http://localhost:4000/regression/2018/04/22/simple-linear-regression.html">&lt;p&gt;If there is one thing statisticians are good at, it is drawing straight lines. (Peter Mueller deserves the credit for that – he said in a lecture once.)&lt;/p&gt;
+
+&lt;p&gt;I write this partly to get the blog up and running, and partly because it’s good to begin at the beginning.&lt;/p&gt;
+
+&lt;p&gt;Suppose you want to predict a continuous response &lt;script type=&quot;math/tex&quot;&gt;y&lt;/script&gt;, using a linear function of some continuous predictor &lt;script type=&quot;math/tex&quot;&gt;x&lt;/script&gt; – i.e., you want to predict &lt;script type=&quot;math/tex&quot;&gt;y&lt;/script&gt; using something of the form &lt;script type=&quot;math/tex&quot;&gt;\beta_0 + \beta_1 x&lt;/script&gt;. Maybe you have a graph that looks like this:
+&lt;img src=&quot;/images/no_line.png&quot; alt=&quot;Scatter&quot; /&gt; 
+And your sole desire is to find the best line through those points.&lt;/p&gt;
+
+&lt;p&gt;Now suppose you think the “best” line is the one that minimizes quadratic loss – the sum of the squared vertical distances between each point and the line in question. So you want to find &lt;script type=&quot;math/tex&quot;&gt;\beta_0&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;\beta_1&lt;/script&gt; which satisfy:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\begin{align*}
+	argmin_{\beta_0, \beta_1} \sum_i (y_i - (\beta_0 + \beta_1x_i))^2
+\end{align*}&lt;/script&gt;
+
+&lt;p&gt;Equivalently, if&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align*}
+		Y = \begin{bmatrix}
+			y_1 \\
+			y_2 \\
+			\vdots \\
+			y_n
+		\end{bmatrix}, \quad
+		X = \begin{bmatrix}
+			1 &amp; x_1 \\
+			1 &amp; x_2 \\
+			\vdots &amp; \vdots \\
+			1 &amp; x_n
+		\end{bmatrix}, \quad \text{and }
+		\beta = \begin{bmatrix}
+			\beta_0 \\
+			\beta_1
+		\end{bmatrix}
+	\end{align*} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;then suppose you think the best line is the one that minimizes&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;argmin_\beta (Y - X\beta)'(Y - X\beta).&lt;/script&gt;
+
+&lt;p&gt;Notice, because &lt;script type=&quot;math/tex&quot;&gt;\beta'X'Y&lt;/script&gt; is a scalar, and hence because &lt;script type=&quot;math/tex&quot;&gt;(\beta'X'Y)' = Y'X\beta = \beta'X'Y&lt;/script&gt;,&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align*}
+	(Y - X\beta)'(Y - X\beta) &amp;=  Y'Y - \beta'X'Y - Y'X\beta + \beta'X'X\beta \\ &amp;= Y'Y  - 2\beta'X'Y + \beta'X'X\beta
+	\end{align*} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;So, to find the &lt;script type=&quot;math/tex&quot;&gt;\beta&lt;/script&gt; which minimizes quadratic loss, take partials of that last, set them to zero, and solve:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align*}
+&amp;\frac{\partial}{\partial \beta} (Y - X\beta)'(Y - X\beta) = -2X'Y + 2X'X\beta = 0 \\
+&amp;\Rightarrow X'X\beta = X'Y \\
+&amp;\Rightarrow \beta = (X'X)^{-1}X'Y
+\end{align*} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;The last step is kosher so long as &lt;script type=&quot;math/tex&quot;&gt;X'X&lt;/script&gt; is invertible.&lt;/p&gt;
+
+&lt;p&gt;Take the data from the scatterplot above, and regard it as fixed. The contour plot below shows the value of &lt;script type=&quot;math/tex&quot;&gt;\sum_i (y_i - (\beta_0 + \beta_1x_i))^2 = (Y - X \beta)'(Y - X\beta)&lt;/script&gt; for differing values of &lt;script type=&quot;math/tex&quot;&gt;\beta_0&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;\beta_1&lt;/script&gt;. The tiny ‘x’ marks the unique minimum we just found, &lt;script type=&quot;math/tex&quot;&gt;(X'X)^{-1}X'Y&lt;/script&gt;.
+&lt;img src=&quot;/images/ql.png&quot; alt=&quot;Quadratic Loss&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;And the line through our points, which corresponds to that choice of &lt;script type=&quot;math/tex&quot;&gt;\beta_0&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;\beta_1&lt;/script&gt;, is drawn in the below picture.
+&lt;img src=&quot;/images/graph.png&quot; alt=&quot;Points 'round a line&quot; /&gt;
+Voila. That line is clearly best.&lt;/p&gt;
+
+&lt;p&gt;Notice there was nothing stochastic in anything above - no assumptions about a probability distribution governing &lt;script type=&quot;math/tex&quot;&gt;Y&lt;/script&gt; or &lt;script type=&quot;math/tex&quot;&gt;X&lt;/script&gt;, or normally distributed epsilons or anything like that. If what you care about is quadratic loss, then &lt;script type=&quot;math/tex&quot;&gt;\beta = (X'X)^{-1}X'Y&lt;/script&gt; gives you the best line through your points, probability distributions be damned.&lt;/p&gt;
+
+&lt;p&gt;Some R code below. Simulate some data, then find and plot the line which minimizes quadratic loss for that data.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-r&quot; data-lang=&quot;r&quot;&gt;&lt;span class=&quot;n&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ggplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+
+&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;## Simulate some data. X[,2] ~ N(0, 1), Y ~ N(X[,2], 1).&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;matrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;rep&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rnorm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ncol&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rnorm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mean&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+
+&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;## Find (X'X)^(-1)X'Y.&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;beta_hat&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;solve&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%*%&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%*%&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%*%&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+
+&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;## Plot the data, with the regression line.&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cbind.data.frame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[,&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ggplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; 
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom_point&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; 
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stat_function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fun&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;beta_hat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;beta_hat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;theme_minimal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; 
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;theme&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element_text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;</content><author><name></name></author><summary type="html">If there is one thing statisticians are good at, it is drawing straight lines. (Peter Mueller deserves the credit for that – he said in a lecture once.)</summary></entry></feed>

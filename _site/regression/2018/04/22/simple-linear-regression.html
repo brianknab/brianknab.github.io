@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.4.0 -->
+<title>Simple linear regression part one - nothing stochastic in sight | B K</title>
+<meta name="generator" content="Jekyll v3.8.0" />
+<meta property="og:title" content="Simple linear regression part one - nothing stochastic in sight" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="If there is one thing statisticians are good at, it is drawing straight lines. (Peter Mueller deserves the credit for that – he said in a lecture once.)" />
+<meta property="og:description" content="If there is one thing statisticians are good at, it is drawing straight lines. (Peter Mueller deserves the credit for that – he said in a lecture once.)" />
+<link rel="canonical" href="http://localhost:4000/regression/2018/04/22/simple-linear-regression.html" />
+<meta property="og:url" content="http://localhost:4000/regression/2018/04/22/simple-linear-regression.html" />
+<meta property="og:site_name" content="B K" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-04-22T00:00:00-05:00" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/regression/2018/04/22/simple-linear-regression.html","description":"If there is one thing statisticians are good at, it is drawing straight lines. (Peter Mueller deserves the credit for that – he said in a lecture once.)","headline":"Simple linear regression part one - nothing stochastic in sight","datePublished":"2018-04-22T00:00:00-05:00","dateModified":"2018-04-22T00:00:00-05:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/regression/2018/04/22/simple-linear-regression.html"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="B K" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">B K</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Simple linear regression part one - nothing stochastic in sight</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2018-04-22T00:00:00-05:00" itemprop="datePublished">Apr 22, 2018
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>If there is one thing statisticians are good at, it is drawing straight lines. (Peter Mueller deserves the credit for that – he said in a lecture once.)</p>
+
+<p>I write this partly to get the blog up and running, and partly because it’s good to begin at the beginning.</p>
+
+<p>Suppose you want to predict a continuous response <script type="math/tex">y</script>, using a linear function of some continuous predictor <script type="math/tex">x</script> – i.e., you want to predict <script type="math/tex">y</script> using something of the form <script type="math/tex">\beta_0 + \beta_1 x</script>. Maybe you have a graph that looks like this:
+<img src="/images/no_line.png" alt="Scatter" /> 
+And your sole desire is to find the best line through those points.</p>
+
+<p>Now suppose you think the “best” line is the one that minimizes quadratic loss – the sum of the squared vertical distances between each point and the line in question. So you want to find <script type="math/tex">\beta_0</script> and <script type="math/tex">\beta_1</script> which satisfy:</p>
+
+<script type="math/tex; mode=display">\begin{align*}
+	argmin_{\beta_0, \beta_1} \sum_i (y_i - (\beta_0 + \beta_1x_i))^2
+\end{align*}</script>
+
+<p>Equivalently, if</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align*}
+		Y = \begin{bmatrix}
+			y_1 \\
+			y_2 \\
+			\vdots \\
+			y_n
+		\end{bmatrix}, \quad
+		X = \begin{bmatrix}
+			1 & x_1 \\
+			1 & x_2 \\
+			\vdots & \vdots \\
+			1 & x_n
+		\end{bmatrix}, \quad \text{and }
+		\beta = \begin{bmatrix}
+			\beta_0 \\
+			\beta_1
+		\end{bmatrix}
+	\end{align*} %]]></script>
+
+<p>then suppose you think the best line is the one that minimizes</p>
+
+<script type="math/tex; mode=display">argmin_\beta (Y - X\beta)'(Y - X\beta).</script>
+
+<p>Notice, because <script type="math/tex">\beta'X'Y</script> is a scalar, and hence because <script type="math/tex">(\beta'X'Y)' = Y'X\beta = \beta'X'Y</script>,</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align*}
+	(Y - X\beta)'(Y - X\beta) &=  Y'Y - \beta'X'Y - Y'X\beta + \beta'X'X\beta \\ &= Y'Y  - 2\beta'X'Y + \beta'X'X\beta
+	\end{align*} %]]></script>
+
+<p>So, to find the <script type="math/tex">\beta</script> which minimizes quadratic loss, take partials of that last, set them to zero, and solve:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align*}
+&\frac{\partial}{\partial \beta} (Y - X\beta)'(Y - X\beta) = -2X'Y + 2X'X\beta = 0 \\
+&\Rightarrow X'X\beta = X'Y \\
+&\Rightarrow \beta = (X'X)^{-1}X'Y
+\end{align*} %]]></script>
+
+<p>The last step is kosher so long as <script type="math/tex">X'X</script> is invertible.</p>
+
+<p>Take the data from the scatterplot above, and regard it as fixed. The contour plot below shows the value of <script type="math/tex">\sum_i (y_i - (\beta_0 + \beta_1x_i))^2 = (Y - X \beta)'(Y - X\beta)</script> for differing values of <script type="math/tex">\beta_0</script> and <script type="math/tex">\beta_1</script>. The tiny ‘x’ marks the unique minimum we just found, <script type="math/tex">(X'X)^{-1}X'Y</script>.
+<img src="/images/ql.png" alt="Quadratic Loss" /></p>
+
+<p>And the line through our points, which corresponds to that choice of <script type="math/tex">\beta_0</script> and <script type="math/tex">\beta_1</script>, is drawn in the below picture.
+<img src="/images/graph.png" alt="Points 'round a line" />
+Voila. That line is clearly best.</p>
+
+<p>Notice there was nothing stochastic in anything above - no assumptions about a probability distribution governing <script type="math/tex">Y</script> or <script type="math/tex">X</script>, or normally distributed epsilons or anything like that. If what you care about is quadratic loss, then <script type="math/tex">\beta = (X'X)^{-1}X'Y</script> gives you the best line through your points, probability distributions be damned.</p>
+
+<p>Some R code below. Simulate some data, then find and plot the line which minimizes quadratic loss for that data.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">require</span><span class="p">(</span><span class="n">ggplot</span><span class="p">)</span><span class="w">
+
+</span><span class="c1">## Simulate some data. X[,2] ~ N(0, 1), Y ~ N(X[,2], 1).</span><span class="w">
+</span><span class="n">X</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">matrix</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="nf">rep</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">100</span><span class="p">),</span><span class="w"> </span><span class="n">rnorm</span><span class="p">(</span><span class="m">100</span><span class="p">)),</span><span class="w"> </span><span class="n">ncol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w">
+</span><span class="n">Y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">rnorm</span><span class="p">(</span><span class="m">100</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X</span><span class="p">[,</span><span class="m">2</span><span class="p">])</span><span class="w">
+
+</span><span class="c1">## Find (X'X)^(-1)X'Y.</span><span class="w">
+</span><span class="n">beta_hat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">solve</span><span class="p">(</span><span class="n">t</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="n">X</span><span class="p">)</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="n">Y</span><span class="w">
+
+</span><span class="c1">## Plot the data, with the regression line.</span><span class="w">
+</span><span class="n">df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">cbind.data.frame</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X</span><span class="p">[,</span><span class="m">2</span><span class="p">],</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Y</span><span class="p">)</span><span class="w">
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">geom_point</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">stat_function</span><span class="p">(</span><span class="n">fun</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">){</span><span class="n">beta_hat</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">beta_hat</span><span class="p">[</span><span class="m">2</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">})</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme_minimal</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">20</span><span class="p">))</span></code></pre></figure>
+
+
+  </div><a class="u-url" href="/regression/2018/04/22/simple-linear-regression.html" hidden></a>
+</article>
+
+      </div>
+    </main>
+    <ul><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">B K</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">B K</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>statistics, programming, philosophy</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
