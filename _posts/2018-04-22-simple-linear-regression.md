@@ -81,7 +81,7 @@ Notice there was nothing stochastic in anything above - no assumptions about a p
 
 Some R code below. Simulate some data, then find and plot the line which minimizes quadratic loss for that data.
 {% highlight r %}
-require(ggplot)
+require(ggplot2)
 
 ## Simulate some data. X[,2] ~ N(0, 1), Y ~ N(X[,2], 1).
 X <- matrix(c(rep(1, 100), rnorm(100)), ncol = 2)
