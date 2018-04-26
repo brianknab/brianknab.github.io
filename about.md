@@ -5,6 +5,7 @@ permalink: /about/
 ---
 
 
-I am Brian Knab. I recently completed degrees in philosophy (PhD) and in statistics (MS) at the University of Texas. At UT, I thought and wrote about philosophical problems in and around statistics.  You can read all about it [here]({{"/assets/Dissertation.pdf"}}).
+My name is 'Brian Knab'. I recently completed degrees in philosophy (PhD) and in statistics (MS) at the University of Texas at Austin. At UT, I thought and wrote about philosophical problems in, around, and near the bottom of statistics. In philosophy, we call such investigations "formal epistemology."  You can read all about it [here]({{"/assets/Dissertation.pdf"}}).
 
-In this blog, I intend to write mostly about statistics and programming -- to keep me honest in the evaluation of my own understanding. But I suspect some philosophy will arise.
+In this blog, I intend to write mostly about statistics and programming -- primarily to keep me honest in the evaluation of my own understanding. I doubt it will be of much use to anyone except me.
+
