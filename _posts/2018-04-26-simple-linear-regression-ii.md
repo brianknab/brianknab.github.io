@@ -55,9 +55,7 @@ Now, the difference between that first question, 'how would I expect the lines t
 
 Now, without knowing the distribution $$P(y \vert x)$$ it's hard to say much about how much variation we should expect in our quadratic-loss-minimizing lines. But we can make the problem tractable by imposing some additional constraints.
 
-For example, assume that, conditional on the vector of $$x$$-values, each response $$y_i$$ is independent of every other response $$y_j$$.  
-
-Imagine also that -- again conditional on the vector of $$x$$-values -- the variance of the responses $$y$$ is constant, where we denote that constant variance by '$$\sigma^2$$'.
+Assume that, conditional on the vector of $$x$$-values, each response $$y_i$$ is independent of every other response $$y_j$$.  Assume also that -- again conditional on the vector of $$x$$-values -- the variance of the responses $$y$$ is constant, where we denote that constant variance by '$$\sigma^2$$'.
 
 Given those two assumptions, we can compute the covariance matrix of $$\hat{\beta}$$ as follows:
 
