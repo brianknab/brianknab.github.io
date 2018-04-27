@@ -83,7 +83,7 @@ Now, compare that picture to a similar picture below -- with the same $$x$$-valu
 
 ![linear mean]({{ "/images/lin_fit_lines_cube_scale.png" }})
 
-We see generally different slopes across the two plots. That's not surprising. But consider: Both plots are on the same scale, and the variation in the quadratic-loss-minimizing lines is (approximately) the same in both cases. This, despite the fact that the conditional mean of $$y$$ is a much more complicated function of $$x$$ in the former case as opposed to the latter. 
+We see generally different slopes across the two plots. That's not surprising. But consider: both plots are on the same scale, and the variation in the quadratic-loss-minimizing lines is (approximately) the same in both cases. This, despite the fact that the conditional mean of $$y$$ is a much more complicated function of $$x$$ in the former case as opposed to the latter. 
 
 I think that last _is_ surprising. More precisely, what I think is surprising about the above result is that the covariance matrix of $$\hat{\beta}$$ -- which expresses the amount of variation in our quadratic-loss-minimizing lines -- is independent of $$E(y \vert x)$$ considered as a function of $$x$$. Under every such function you should expect the same amount of variation in your quadratic-loss-minimizing lines.
 
