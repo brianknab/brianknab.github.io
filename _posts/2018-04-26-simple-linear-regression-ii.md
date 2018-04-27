@@ -57,7 +57,7 @@ Now, without knowing the distribution $$P(y \vert x)$$ it's hard to say much abo
 
 For example, assume that, conditional on $$x$$, each response $$y_i$$ is independent of every other response $$y_j$$. Imagine, continuing with our earlier example, we will randomly select 10 people, but we stipulate that the first person will weigh 100 lbs, the second 110, the third 130, etc. What the conditional independence assumption requires is that the probability that the second person selected is five feet tall is independent of whether or not the first person was five feet tall. 
 
-Imagine also that -- again conditional on $$x$$ -- the variance of the responses $$y$$ is constant, where we denote that constant variance by '$$\sigma^2$$'. In our example, this would be to suppose that the average departure -- of the height of people who are 100 lbs from the mean height of 100 pounders -- is equal to the average departure of people who are 110 lbs from the mean height of 110 pounders, and similarly for all other weights. (Strictly speaking, it's to suppose something stronger than that, but that would follow.)
+Imagine also that -- again conditional on $$x$$ -- the variance of the responses $$y$$ is constant, where we denote that constant variance by '$$\sigma^2$$'. In our example, this would be to suppose that the average departure -- of the height of people who are 100 lbs from the mean height of 100 pounders -- is equal to the average departure of people who are 110 lbs from the mean height of 110 pounders, and similarly for all other weights.
 
 Given those two assumptions, we can compute the covariance matrix of $$\hat{\beta}$$ as follows:
 
