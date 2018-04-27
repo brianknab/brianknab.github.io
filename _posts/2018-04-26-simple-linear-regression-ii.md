@@ -75,7 +75,7 @@ $$
 \end{align*}
 $$
 
-I think the generality of this result is somewhat surprising, in that it only relies on conditional independence and homoskedasticity (constant variance). Consider, to see why, the below picture, which shows 20 100-data-point samples from a fixed-conditional-variance distribution, and where $$E(y \vert x) = x^3$$, along with 20 corresponding quadratic-loss-minimizing lines: 
+I think the generality of this result is somewhat surprising, in that it only relies on conditional independence and homoskedasticity (constant variance). Consider, to see why I think it's surprising, the below picture, which shows 20 100-data-point samples from a fixed-conditional-variance distribution, and where $$E(y \vert x) = x^3$$, along with 20 corresponding quadratic-loss-minimizing lines: 
 
 ![Cube mean]({{"/images/cube_fit_lines.png"}})
 
