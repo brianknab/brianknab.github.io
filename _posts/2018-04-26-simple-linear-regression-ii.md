@@ -10,7 +10,7 @@ Last time, I began with a graph.
 Namely, this one:
 ![Scatter]({{"/images/no_line.png"}})
 
-And, we regarded the points on that graph as fixed, and found the linear function of $$x$$ which minimized quadratic loss for those points. And recall there was nothing stochastic about anything; we were just minimizing a loss function. And recall also that if we let
+And, we regarded the points on that graph as fixed, and found the linear function of $$x$$ which minimized quadratic loss for those points. And recall we assumed no stochasticity; we were just minimizing a loss function taken over that fixed data. And recall also that if we let
 
 $$
 	\begin{align*}
