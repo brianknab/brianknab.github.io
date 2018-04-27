@@ -125,6 +125,8 @@ Voila. That line is clearly best.</p>
 
 <p>Notice there was nothing stochastic in anything above - no assumptions about a probability distribution governing <script type="math/tex">Y</script> or <script type="math/tex">X</script>, or normally distributed epsilons or anything like that. If what you care about is quadratic loss, then <script type="math/tex">\beta = (X'X)^{-1}X'Y</script> gives you the best line through your points, probability distributions be damned.</p>
 
+<hr />
+
 <p>Some R code below. Simulate some data, then find and plot the line which minimizes quadratic loss for that data.</p>
 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">require</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span><span class="w">
