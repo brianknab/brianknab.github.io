@@ -98,7 +98,7 @@ That's enough for now; something that is also surprising is that there is still 
 
 ---
 
-Code below; generates 20 100-data-point samples from the same conditional distribution, and plots quadratic-loss-minimizers for each.
+Code below; generates 20 100-data-point samples from the same conditional distribution, and plot quadratic-loss-minimizers for each.
 
 {% highlight r %}
 
