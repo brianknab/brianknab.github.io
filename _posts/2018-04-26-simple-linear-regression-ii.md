@@ -48,7 +48,7 @@ And we might also wonder: if we regard our $$x$$-values as _fixed_, but imagine 
 The below picture shows 20 100-data point samples from the same distribution $$P(y \vert x)$$, along with quadratic-loss-minimizing lines for each:
 ![Twenty Lines]({{"/images/lin_fit_lines.png"}})
 
-Appreciate, again, how they vary. The vertical striations on the graph are a result of the fact that the vector of $$x$$-values is fixed; I've sampled $$y$$ from around those fixed $$x$$-values.
+Appreciate, again, how they vary. The vertical striations on the graph are a result of the fact that the vector of $$x$$-values is fixed, and I've sampled $$y$$ from around those fixed $$x$$-values.
 
 Now, the difference between the first question I asked -- 'how would I expect the lines to have varied if I had seen alternative realizations from $$P(x,y)$$?' -- and the second question I asked -- 'how would I expect the lines to have differed if I had seen alternative realizations from $$P(y \vert x)$$?' -- is subtle. The first asks -- across samples from $$P(x,y)$$, how do quadratic-loss-minimizers tend to vary. The second asks -- across all samples from $$P(x,y)$$ _where the vector of $$x$$ values is equal to the vector of $$x$$-values I happened to observe in my data_ -- how do quadratic-loss-minimizers tend to vary? Here, we'll focus on this latter question, partly because it's tradition, but mostly because it's easier to answer.
 
@@ -86,8 +86,6 @@ Now, compare that picture to a similar picture below -- with the same $$x$$-valu
 We see generally different slopes across the two plots. That's not surprising. But consider: both plots are on the same scale, and the variation in the quadratic-loss-minimizing lines is (approximately) the same in both cases. This, despite the fact that the conditional mean of $$y$$ is a much more complicated function of $$x$$ in the former case as opposed to the latter. 
 
 I think that last _is_ surprising. More precisely, what I think is surprising about the above result is that the covariance matrix of $$\hat{\beta}$$ -- which expresses the amount of variation in our quadratic-loss-minimizing lines -- is independent of $$E(y \vert x)$$ considered as a function of $$x$$. Under every such function you should expect the same amount of variation in your quadratic-loss-minimizing lines.
-
-Maybe that's only surprising to me. 
 
 That's enough for now; something that is also surprising is that there is still (a lot) more to say about drawing straight lines through a crop of data points. So, still more to come on this.
 
