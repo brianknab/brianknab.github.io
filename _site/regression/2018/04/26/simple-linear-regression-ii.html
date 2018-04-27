@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-89095798-1', 'auto');
+    ga('send', 'pageview');
+</script><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.4.0 -->
+<title>Simple linear regression part two - with stochasticity this time | B K</title>
+<meta name="generator" content="Jekyll v3.8.0" />
+<meta property="og:title" content="Simple linear regression part two - with stochasticity this time" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Last time, I began with a graph." />
+<meta property="og:description" content="Last time, I began with a graph." />
+<link rel="canonical" href="http://localhost:4000/regression/2018/04/26/simple-linear-regression-ii.html" />
+<meta property="og:url" content="http://localhost:4000/regression/2018/04/26/simple-linear-regression-ii.html" />
+<meta property="og:site_name" content="B K" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-04-26T00:00:00-05:00" />
+<script type="application/ld+json">
+{"url":"http://localhost:4000/regression/2018/04/26/simple-linear-regression-ii.html","description":"Last time, I began with a graph.","headline":"Simple linear regression part two - with stochasticity this time","datePublished":"2018-04-26T00:00:00-05:00","dateModified":"2018-04-26T00:00:00-05:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/regression/2018/04/26/simple-linear-regression-ii.html"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="B K" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">B K</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Simple linear regression part two - with stochasticity this time</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2018-04-26T00:00:00-05:00" itemprop="datePublished">Apr 26, 2018
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>Last time, I began with a graph.</p>
+
+<p>Namely, this one:
+<img src="/images/no_line.png" alt="Scatter" /></p>
+
+<p>And, we regarded the points on that graph as fixed, and found the linear function of <script type="math/tex">x</script> which minimized quadratic loss for those points. And recall there was nothing stochastic about anything; we were just minimizing a loss function. And recall also that if we let</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align*}
+		Y = \begin{bmatrix}
+			y_1 \\
+			y_2 \\
+			\vdots \\
+			y_n
+		\end{bmatrix}, \quad \text{and} \quad
+		X = \begin{bmatrix}
+			1 & x_1 \\
+			1 & x_2 \\
+			\vdots & \vdots \\
+			1 & x_n
+		\end{bmatrix}
+	\end{align*} %]]></script>
+
+<p>then we found that the vector</p>
+
+<script type="math/tex; mode=display">\hat{\beta} = (X'X)^{-1}X'Y</script>
+
+<p>supplies the line which minimizes quadratic loss for our data. Its first element is the intercept, and its second is the slope.</p>
+
+<p>But typically, we do not think of our data as fixed. Instead, we see it as the realization of a chance process –  a realization from a joint probability distribution, <script type="math/tex">P(x, y)</script>, governing <script type="math/tex">x</script> and <script type="math/tex">y</script>. (We might, for example, think of <script type="math/tex">x</script> as weight, and <script type="math/tex">y</script> as height, and then imagine selecting 100 people at random. <script type="math/tex">P(x,y)</script> would then describe the probability of selecting a person of weight <script type="math/tex">x</script> and height <script type="math/tex">y</script>.)</p>
+
+<p>And if we do see our data as the realization of a chance process, then we might wonder about things besides which line minimizes quadratic loss for our observed data. We might also wonder, for example, if we had seen an alternative realization from <script type="math/tex">P(x,y)</script>, how would we expect our quadratic-loss-minimizing line to have differed? Below, for example, we have two 100 data point samples from the same underlying distribution on <script type="math/tex">x</script> and <script type="math/tex">y</script>, along with the quadratic-loss-minimizing lines for each:</p>
+
+<p><img src="/images/two_samp_lines.png" alt="TwoSamplesWithLine" /></p>
+
+<p>Appreciate how they vary and waver.</p>
+
+<p>An altnerative thing we might wonder about is this: if we regard our <script type="math/tex">x</script>-values as <em>fixed</em>, but imagine we had seen an alternative realization from <script type="math/tex">P(y \vert x)</script>, how would we expect our quadratic-loss-minimizing line to have varied?</p>
+
+<p>The below picture shows 20 100-data point samples from the same distribution <script type="math/tex">P(y \vert x)</script>, along with quadratic-loss-minimizing lines for each:
+<img src="/images/lin_fit_lines.png" alt="Twenty Lines" /></p>
+
+<p>The vertical striations in the data are a result of the fact that the <script type="math/tex">x</script> values are fixed; we are simply sampling <script type="math/tex">y</script> from around those fixed <script type="math/tex">x</script> values.</p>
+
+<p>Now, the difference between that first question, ‘how would I expect the lines to have varied if I had seen an alternative realization from <script type="math/tex">P(x,y)</script>?’ and the second question ‘how would I expect the lines to have differed if I had seen an alternative realization from <script type="math/tex">P(y \vert x)</script>?’ is subtle. The first asks – across samples from <script type="math/tex">P(x,y)</script>, how do quadratic-loss-minimizers tend to vary. The second asks – across all samples from <script type="math/tex">P(x,y)</script> <em>where <script type="math/tex">x</script> takes the values that <script type="math/tex">x</script> happened to take in my data</em> – how do quadratic-loss-minimizers tend to vary? Here, we’ll focus on this latter question, partly because it’s tradition, but mostly because it’s easier to answer.</p>
+
+<p>Now, without knowing the distribution <script type="math/tex">P(y \vert x)</script> it’s hard to say much about how much variation we should expect in our quadratic-loss-minimizing lines. But we can make the problem tractable by imposing some additional constraints.</p>
+
+<p>For example, assume that, conditional on <script type="math/tex">x</script>, each response <script type="math/tex">y_i</script> is independent of every other response <script type="math/tex">y_j</script>. Imagine, continuing with our earlier example, we will randomly select 10 people, but we stipulate that the first person will weigh 100 lbs, the second 110, the third 130, etc. What the conditional independence assumption requires is that the probability that the second person selected is five feet tall is independent of whether or not the first person was five feet tall.</p>
+
+<p>Imagine also that – again conditional on <script type="math/tex">x</script> – the variance of the responses <script type="math/tex">y</script> is constant, where we denote that constant variance by ‘<script type="math/tex">\sigma^2</script>’. In our example, this would be to suppose that the average departure – of the height of people who are 100 lbs from the mean height of 100 pounders – is equal to the average departure of people who are 110 lbs from the mean height of 110 pounders, and similarly for all other weights. (Strictly speaking, it’s to suppose something stronger than that, but that would follow.)</p>
+
+<p>Given those two assumptions, we can compute the covariance matrix of <script type="math/tex">\hat{\beta}</script> as follows:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align*}
+	cov (\hat{\beta} | X) &= E[(\hat{\beta} - E(\hat{\beta}))(\hat{\beta} - E(\hat{\beta}))' | X] \\
+	&= E\big[\big(X'X)^{-1}X'Y - E((X'X)^{-1}X'Y)\big) \big((X'X)^{-1}X'Y - E((X'X)^{-1}X'Y)\big)' | X] \\
+	&= E[(X'X)^{-1}X'YY'X(X'X)^{-1} - \\
+	& \quad \qquad (X'X)^{-1}X'E(Y)Y'X(X'X)^{-1} - \\
+	& \quad \qquad (X'X)^{-1}X'YE(Y)'X(X'X)^{-1} + \\ 
+	& \quad \qquad (X'X)^{-1}X'E(Y)E(Y)'X(X'X)^{-1} | X] \\
+	&= (X'X)^{-1}X'E\big[YY' - E(Y)Y' - Y'E(Y)' + E(Y)E(Y)'\big]X(X'X)^{-1} \\
+	&= (X'X)^{-1}X'\underbrace{E\big[(Y - E(Y))(Y - E(Y))']}_{cov (Y)}X(X'X)^{-1} \\
+	&= (X'X)^{-1}X'\sigma^2IX(X'X)^{-1} \\
+	&= \sigma^2 (X'X)^{-1}X'X(X'X)^{-1} \\
+	&= \sigma^2 (X'X)^{-1}
+\end{align*} %]]></script>
+
+<p>I think the generality of this result is somewhat surprising, in that it only relies on conditional independence and homoskedasticity (constant variance). Consider, to see why, the below picture, which shows 20 100-data-point samples from a fixed-conditional-variance distribution, and where <script type="math/tex">E(y \vert x) = x^3</script>, along with 20 corresponding quadratic-loss-minimizing lines:</p>
+
+<p><img src="/images/cube_fit_lines.png" alt="Cube mean" /></p>
+
+<p>Now, compare the above picture to a similar picture – with the same <script type="math/tex">x</script>-values, but where the <script type="math/tex">y</script>-values are generated from a distribution with <script type="math/tex">E(y \vert x) = x</script> – i.e., where the conditional mean of <script type="math/tex">y</script> is a linear, instead of a cubic, function of <script type="math/tex">x</script>, and with the same fixed conditional variance as above:</p>
+
+<p><img src="/images/lin_fit_lines_cube_scale.png" alt="linear mean" /></p>
+
+<p>We see generally different slopes across the two plots. That’s not surprising. But consider: I’ve plotted both on the same scale, and the variation in the quadratic-loss-minimizing lines is (approximately) the same in both cases. This, despite the fact that the conditional mean of <script type="math/tex">y</script> is a much more complicated function of <script type="math/tex">x</script> in the former case versus the latter.</p>
+
+<p>I think that last <em>is</em> surprising. More precisely, what I think is surprising about the above result is that the covariance matrix of <script type="math/tex">\hat{\beta}</script> – which expresses the amount of variation in our quadratic-loss-minimizing lines – is independent of <script type="math/tex">E(y \vert x)</script> considered as a function of <script type="math/tex">x</script>. Under every such function you should expect the same amount of variation in your quadratic-loss-minimizing lines.</p>
+
+<p>Maybe that’s only surprising to me.</p>
+
+<p>That’s enough for now; something that is also surprising is that there is still (a lot) more to say about drawing straight lines through a crop of data points. So, still more to come on this.</p>
+
+<hr />
+
+<p>Code below; generates 20 100-data-point samples from the same conditional distribution, and plots quadratic-loss-minimizers for each.</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">require</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span><span class="w">
+
+</span><span class="c1">## Init structures to store samples</span><span class="w">
+</span><span class="n">df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">NULL</span><span class="w">
+</span><span class="n">beta_hat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">NULL</span><span class="w">
+
+</span><span class="c1">## Generate some x-values. X[,2] ~ N(0, 1)</span><span class="w">
+</span><span class="n">X</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">matrix</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="nf">rep</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">100</span><span class="p">),</span><span class="w"> </span><span class="n">rnorm</span><span class="p">(</span><span class="m">100</span><span class="p">)),</span><span class="w"> </span><span class="n">ncol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w">
+
+</span><span class="c1">## Over 20 iterations, generate 100 y-values, Y ~ N(X[,2], 1), </span><span class="w">
+</span><span class="c1">## and compute quadratic-loss-minimizers</span><span class="w">
+</span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">seq</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">20</span><span class="p">)){</span><span class="w">
+  </span><span class="n">Y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">rnorm</span><span class="p">(</span><span class="m">100</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X</span><span class="p">[,</span><span class="m">2</span><span class="p">])</span><span class="w">
+  </span><span class="n">df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">rbind.data.frame</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="w"> </span><span class="n">cbind.data.frame</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X</span><span class="p">[,</span><span class="m">2</span><span class="p">],</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Y</span><span class="p">,</span><span class="w"> </span><span class="n">iter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="p">))</span><span class="w">
+  
+</span><span class="c1">## Find (X'X)^(-1)X'Y.</span><span class="w">
+  </span><span class="n">bh</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">solve</span><span class="p">(</span><span class="n">t</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="n">X</span><span class="p">)</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="w"> </span><span class="o">%*%</span><span class="w"> </span><span class="n">Y</span><span class="w">
+  </span><span class="n">beta_hat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">rbind.data.frame</span><span class="p">(</span><span class="n">beta_hat</span><span class="p">,</span><span class="w"> 
+                               </span><span class="n">cbind.data.frame</span><span class="p">(</span><span class="n">intercept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bh</span><span class="p">[</span><span class="m">1</span><span class="p">],</span><span class="w"> </span><span class="n">slope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bh</span><span class="p">[</span><span class="m">2</span><span class="p">],</span><span class="w"> </span><span class="n">iter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="p">))</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="c1">## Plot the samples along with their quadratic-loss-minimizers.</span><span class="w">
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">as.factor</span><span class="p">(</span><span class="n">iter</span><span class="p">)))</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">geom_point</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">theme_minimal</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">scale_color_grey</span><span class="p">(</span><span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.1</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'Sample'</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">20</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_abline</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">beta_hat</span><span class="p">,</span><span class="w">
+              </span><span class="n">aes</span><span class="p">(</span><span class="n">intercept</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">intercept</span><span class="p">,</span><span class="w"> </span><span class="n">slope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">slope</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">as.factor</span><span class="p">(</span><span class="n">iter</span><span class="p">)))</span><span class="w"> </span></code></pre></figure>
+
+
+  </div><a class="u-url" href="/regression/2018/04/26/simple-linear-regression-ii.html" hidden></a>
+</article>
+
+      </div>
+    </main>
+    <ul><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">B K</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">B K</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>statistics, programming, philosophy</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
