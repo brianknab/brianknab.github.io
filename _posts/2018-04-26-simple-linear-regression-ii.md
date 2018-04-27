@@ -53,7 +53,7 @@ The vertical striations in the data are a result of the fact that the $$x$$ valu
 Now, the difference between that first question, 'how would I expect the lines to have varied if I had seen an alternative realization from $$P(x,y)$$?' and the second question 'how would I expect the lines to have differed if I had seen an alternative realization from $$P(y \vert x)$$?' is subtle. The first asks -- across samples from $$P(x,y)$$, how do quadratic-loss-minimizers tend to vary. The second asks -- across all samples from $$P(x,y)$$ _where $$x$$ takes the values that $$x$$ happened to take in my data_ -- how do quadratic-loss-minimizers tend to vary? Here, we'll focus on this latter question, partly because it's tradition, but mostly because it's easier to answer.
 
 
-Now, without knowing the distribution $$P(y \vert x)$$ it's hard to say much about how much variation we should expect in our quadratic-loss-minimizing lines. But we can make the problem tractable by imposing some additional constraints.
+Now, without knowing the distribution $$P(y \vert x)$$ it's hard to say much about the variation we should expect in our quadratic-loss-minimizing lines. But we can make the problem tractable by imposing some additional constraints.
 
 Assume that, conditional on the vector of $$x$$-values, each response $$y_i$$ is independent of every other response $$y_j$$.  Assume also that -- again conditional on the vector of $$x$$-values -- the variance of the responses $$y$$ is constant, where we denote that constant variance by '$$\sigma^2$$'.
 
