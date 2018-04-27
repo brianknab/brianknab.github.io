@@ -43,7 +43,7 @@ And if we do see our data as the realization of a chance process, then we might 
 
 Appreciate how they vary and waver.
 
-An altnerative thing we might wonder about is this: if we regard our $$x$$-values as _fixed_, but imagine we had seen an alternative realization from $$P(y \vert x)$$, how would we expect our quadratic-loss-minimizing line to have varied?
+Now, an alternative thing we might wonder about is this: if we regard our $$x$$-values as _fixed_, but imagine we had seen an alternative realization from $$P(y \vert x)$$, how would we expect our quadratic-loss-minimizing line to have varied?
 
 The below picture shows 20 100-data point samples from the same distribution $$P(y \vert x)$$, along with quadratic-loss-minimizing lines for each:
 ![Twenty Lines]({{"/images/lin_fit_lines.png"}})
