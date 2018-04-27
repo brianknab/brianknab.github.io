@@ -37,20 +37,20 @@ supplies the line which minimizes quadratic loss for our data. Its first element
 
 But typically, we do not think of our data as fixed. Instead, we see it as the realization of a chance process --  a realization from a joint probability distribution, $$P(x, y)$$, governing $$x$$ and $$y$$. (We might, for example, think of $$x$$ as weight, and $$y$$ as height, and then imagine selecting someone at random. $$P(x,y)$$ would then describe the probability of selecting a person of weight $$x$$ and height $$y$$.)
 
-And if we do see our data as the realization of a chance process, then we might wonder about things besides which line minimizes quadratic loss for our observed data. We might also wonder, for example, if we had seen an alternative realization from $$P(x,y)$$, how would we expect our quadratic-loss-minimizing line to have differed? Below, for example, we have two 100 data point samples from the same underlying distribution on $$x$$ and $$y$$, along with the quadratic-loss-minimizing lines for each:
+And if we do see our data as the realization of a chance process, then we might wonder: if we had seen an alternative realization from $$P(x,y)$$, how would we expect our quadratic-loss-minimizing line to have differed? Below, for example, we have two 100 data point samples from the same underlying distribution on $$x$$ and $$y$$, along with the quadratic-loss-minimizing lines for each:
 
 ![TwoSamplesWithLine]({{"/images/two_samp_lines.png"}})
 
-Appreciate how they vary and waver.
+Appreciate how they vary.
 
-Now, an alternative thing we might wonder about is this: if we regard our $$x$$-values as _fixed_, but imagine we had seen an alternative realization from $$P(y \vert x)$$, how would we expect our quadratic-loss-minimizing line to have varied?
+We might also wonder: if we regard our $$x$$-values as _fixed_, but imagine we had seen an alternative realization from $$P(y \vert x)$$, how would we expect our quadratic-loss-minimizing line to have varied?
 
 The below picture shows 20 100-data point samples from the same distribution $$P(y \vert x)$$, along with quadratic-loss-minimizing lines for each:
 ![Twenty Lines]({{"/images/lin_fit_lines.png"}})
 
-The vertical striations in the data are a result of the fact that the $$x$$ values are fixed; we are simply sampling $$y$$ from around those fixed $$x$$ values.
+The vertical striations in the data are a result of the fact that the vector of $$x$$-values is fixed; we are simply sampling $$y$$ from around those fixed $$x$$-values.
 
-Now, the difference between that first question, 'how would I expect the lines to have varied if I had seen an alternative realization from $$P(x,y)$$?' and the second question 'how would I expect the lines to have differed if I had seen an alternative realization from $$P(y \vert x)$$?' is subtle. The first asks -- across samples from $$P(x,y)$$, how do quadratic-loss-minimizers tend to vary. The second asks -- across all samples from $$P(x,y)$$ _where $$x$$ takes the values that $$x$$ happened to take in my data_ -- how do quadratic-loss-minimizers tend to vary? Here, we'll focus on this latter question, partly because it's tradition, but mostly because it's easier to answer.
+Now, the difference between the first question I asked -- 'how would I expect the lines to have varied if I had seen an alternative realization from $$P(x,y)$$? -- and the second question I asked -- 'how would I expect the lines to have differed if I had seen an alternative realization from $$P(y \vert x)$$?'  --is subtle. The first asks -- across samples from $$P(x,y)$$, how do quadratic-loss-minimizers tend to vary. The second asks -- across all samples from $$P(x,y)$$ _where the vector of $$x$$ values is equal to the vector of $$x$$-values I happened to take in my data_ -- how do quadratic-loss-minimizers tend to vary? Here, we'll focus on this latter question, partly because it's tradition, but mostly because it's easier to answer.
 
 
 Now, without knowing the distribution $$P(y \vert x)$$ it's hard to say much about the variation we should expect in our quadratic-loss-minimizing lines. But we can make the problem tractable by imposing some additional constraints.
