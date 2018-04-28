@@ -37,7 +37,7 @@ supplies the line which minimizes quadratic loss for our data. Its first element
 
 But typically, we do not think of our data as fixed. Instead, we see each data point as a realization from a chance process -- a realization from a joint probability distribution, $$P(x, y)$$, governing $$x$$ and $$y$$. (We might, for example, think of $$x$$ as weight, and $$y$$ as height, and then imagine selecting someone at random. $$P(x,y)$$ would then describe the probability of selecting a person of weight $$x$$ and height $$y$$.)
 
-And if we do see our data as the realizations of a chance process, then we might wonder: if we had seen _alternative_ realizations from $$P(x,y)$$, how would we expect our quadratic-loss-minimizing line to have differed? The below picture, for example, shows two 100 data point samples from the same underlying distribution on $$x$$ and $$y$$, along with the quadratic-loss-minimizing lines for each:
+And if we do see our data as realizations from a chance process, then we might wonder: if we had seen _alternative_ realizations from $$P(x,y)$$, how would we expect our quadratic-loss-minimizing line to have differed? The below picture, for example, shows two 100 data point samples from the same underlying distribution on $$x$$ and $$y$$, along with the quadratic-loss-minimizing lines for each:
 
 ![TwoSamplesWithLine]({{"/images/two_samp_lines.png"}})
 
@@ -50,7 +50,7 @@ The below picture shows 20 100-data point samples from the same distribution $$P
 
 Appreciate, again, how they shift and vary. Notice also the vertical striations on the graph. These are a result of the fact that the vector of $$x$$-values is _fixed_. I've sampled $$y$$ from around those fixed $$x$$-values.
 
-So, the difference between the first question I asked -- 'how would I expect the lines to vary if I saw alternative realizations from $$P(x,y)$$?' -- and the second question I asked -- 'how would I expect the lines to vary if I saw alternative realizations from $$P(y \vert x)$$?' -- is subtle. The first asks -- across samples from $$P(x,y)$$, how do quadratic-loss-minimizers tend to vary. The second asks -- across all samples from $$P(x,y)$$ _where the vector of $$x$$ values is equal to the vector of $$x$$-values I happened to witness_ -- how do quadratic-loss-minimizers tend to vary? Here, we'll focus on this latter question, mostly because it's easier to answer.
+So, the difference between the first question -- 'how would I expect the lines to vary if I saw alternative realizations from $$P(x,y)$$?' -- and the second question -- 'how would I expect the lines to vary if I saw alternative realizations from $$P(y \vert x)$$?' -- is subtle. The first asks -- across samples from $$P(x,y)$$, how do quadratic-loss-minimizers tend to vary. The second asks -- across all samples from $$P(x,y)$$ _where the vector of $$x$$ values is equal to the vector of $$x$$-values I happened to witness_ -- how do quadratic-loss-minimizers tend to vary? Here, we'll focus on this latter question, mostly because it's easier to answer.
 
 Now, without knowing the distribution $$P(y \vert x)$$ it's hard to say much about the variation we should expect in our quadratic-loss-minimizing lines. But we can make the problem tractable by imposing some additional constraints.
 
