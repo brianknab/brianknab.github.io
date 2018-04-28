@@ -11,6 +11,7 @@ Namely, this one:
 ![Scatter]({{"/images/no_line.png"}})
 
 And we regarded the points on that graph as fixed, and found the linear function of $$x$$ which minimized quadratic loss for those points. And recall we assumed nothing stochastic; we were just minimizing a loss function taken over fixed data. And recall also that if we let
+
 $$
 	\begin{align*}
 		Y = \begin{bmatrix}
