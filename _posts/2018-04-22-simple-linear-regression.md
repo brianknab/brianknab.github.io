@@ -13,7 +13,7 @@ Suppose you have a graph that looks like this:
 ![Scatter]({{"/images/no_line.png"}}) 
 And suppose you wanted to capture the data on that graph, as well as possible, using a linear function of $$x$$ -- i.e., something of the form $$\beta_0 + \beta_1 x$$. To help get the problem in mind, imagine that -- where each point on the graph is $$(x_i, y_i)$$ -- you would like a compatriot, who has access to all of the $$x_i$$'s, to be able to recover the values of the $$y_i$$. But imagine further that you only have enough bandwidth to transmit to your compatriot a slope and an intercept.
 
-Now, suppose the cost you pay for the error in your compatriot's estimate of $$y_i$$ for a given $$x_i$$ is proportional to the squared error between her guess - based on the slope and intercept you provided -- and the true value of $$y_i$.$
+Now, suppose the cost you pay for the error in your compatriot's estimate of $$y_i$$ for a given $$x_i$$ is proportional to the squared error between her guess - based on the slope and intercept you provided -- and the true value of $$y_i$$.
 
 In that situation, the "best" line is the one that minimizes quadratic loss -- the sum of the squared vertical distances between each point and the line in question. So you want to find $$\beta_0$$ and $$\beta_1$$ which satisfy: 
 
