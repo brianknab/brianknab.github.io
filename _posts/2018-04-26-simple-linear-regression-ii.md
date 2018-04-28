@@ -48,7 +48,7 @@ Now, we might _also_ wonder: if we regard our $$x$$-values as _fixed_, how would
 The below picture shows 20 100-data point samples from the same distribution $$P(y \vert x)$$, along with quadratic-loss-minimizing lines for each:
 ![Twenty Lines]({{"/images/lin_fit_lines.png"}})
 
-Appreciate, again, how they shift and vary. Notice also the vertical striations on the graph. These are a result of the fact that the vector of $$x$$-values is _fixed_, I've sampled $$y$$ from around those fixed $$x$$-values.
+Appreciate, again, how they shift and vary. Notice also the vertical striations on the graph. These are a result of the fact that the vector of $$x$$-values is _fixed_. I've sampled $$y$$ from around those fixed $$x$$-values.
 
 So, the difference between the first question I asked -- 'how would I expect the lines to vary if I saw alternative realizations from $$P(x,y)$$?' -- and the second question I asked -- 'how would I expect the lines to vary if I saw alternative realizations from $$P(y \vert x)$$?' -- is subtle. The first asks -- across samples from $$P(x,y)$$, how do quadratic-loss-minimizers tend to vary. The second asks -- across all samples from $$P(x,y)$$ _where the vector of $$x$$ values is equal to the vector of $$x$$-values I happened to witness_ -- how do quadratic-loss-minimizers tend to vary? Here, we'll focus on this latter question, mostly because it's easier to answer.
 
