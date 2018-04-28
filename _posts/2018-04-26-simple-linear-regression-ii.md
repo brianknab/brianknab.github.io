@@ -35,7 +35,7 @@ $$ \hat{\beta} = (X'X)^{-1}X'Y $$
 
 supplies the line which minimizes quadratic loss for our data. Its first element is the intercept, and its second is the slope.
 
-But typically, we do not think of our data as fixed. Instead, we see each data point as a realization of a chance process -- a realization from a joint probability distribution, $$P(x, y)$$, governing $$x$$ and $$y$$. (We might, for example, think of $$x$$ as weight, and $$y$$ as height, and then imagine selecting someone at random. $$P(x,y)$$ would then describe the probability of selecting a person of weight $$x$$ and height $$y$$.)
+But typically, we do not think of our data as fixed. Instead, we see each data point as a realization from a chance process -- a realization from a joint probability distribution, $$P(x, y)$$, governing $$x$$ and $$y$$. (We might, for example, think of $$x$$ as weight, and $$y$$ as height, and then imagine selecting someone at random. $$P(x,y)$$ would then describe the probability of selecting a person of weight $$x$$ and height $$y$$.)
 
 And if we do see our data as the realizations of a chance process, then we might wonder: if we had seen _alternative_ realizations from $$P(x,y)$$, how would we expect our quadratic-loss-minimizing line to have differed? The below picture, for example, shows two 100 data point samples from the same underlying distribution on $$x$$ and $$y$$, along with the quadratic-loss-minimizing lines for each:
 
