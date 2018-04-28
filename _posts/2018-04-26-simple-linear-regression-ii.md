@@ -84,7 +84,7 @@ Now, compare that picture to a similar picture below -- with the same $$x$$-valu
 
 We see generally different slopes across the two plots. That's not surprising. But consider: both plots are on the same scale, and the variation in the quadratic-loss-minimizing lines is (approximately) the same in both cases. This, despite the fact that the conditional mean of $$y$$ is a much more complicated function of $$x$$ in the former case than in the latter. 
 
-I think that last _is_ surprising. More precisely, what I think is surprising about the above result is that the covariance matrix of $$\hat{\beta}$$ -- which expresses the amount of variation in our quadratic-loss-minimizing lines -- is independent of $$E(y \vert x)$$ considered as a function of $$x$$. Under every such function the expected variation in your quadratic-loss-minimizing lines is the same.
+I think that last _is_ surprising. More precisely, what I think is surprising about the above result is that the covariance matrix of $$\hat{\beta}$$ -- which expresses the amount of variation in our quadratic-loss-minimizing lines -- is independent of $$E(y \vert x)$$ considered as a function of $$x$$. Under every such function the expected variation in our quadratic-loss-minimizing lines is the same.
 
 That's enough for now; something that is also surprising is that there is still (a lot) more to say about drawing straight lines through a crop of data points. So, still more to come on this.
 
