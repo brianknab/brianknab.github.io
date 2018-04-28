@@ -9,11 +9,13 @@ If there is one thing statisticians are good at, it is drawing straight lines. (
 
 I write this partly to get the blog up and running, and partly because it's good to begin at the beginning.
 
-Suppose you want to predict a continuous response $$y$$, using a linear function of some continuous predictor $$x$$ -- i.e., you want to predict $$y$$ using something of the form $$\beta_0 + \beta_1 x$$. Maybe you have a graph that looks like this:
+Suppose you have a graph that looks like this: 
 ![Scatter]({{"/images/no_line.png"}}) 
-And your sole desire is to find the best line through those points.
+And suppose you wanted to capture the data on that graph, as well as possible, using a linear function of $$x$$ -- i.e., something of the form $$\beta_0 + \beta_1 x$$. To help get the problem in mind, imagine that -- where each point on the graph is $$(x_i, y_i)$$ -- you would like a compatriot, who has access to all of the $$x_i$$'s, to be able to recover the values of the $$y_i$$. But imagine further that you only have enough bandwidth to transmit a slope and an intercept.
 
-Now suppose you think the "best" line is the one that minimizes quadratic loss -- the sum of the squared vertical distances between each point and the line in question. So you want to find $$\beta_0$$ and $$\beta_1$$ which satisfy: 
+Now, suppose the cost you pay for the error in your compatriot's estimate of $$y_i$$ for a given $$x_i$$ is proportional to the squared error between her guess - based on the slope and intercept you provided -- and the true value of $$y_i$.$
+
+In that situation, the "best" line is the one that minimizes quadratic loss -- the sum of the squared vertical distances between each point and the line in question. So you want to find $$\beta_0$$ and $$\beta_1$$ which satisfy: 
 
 $$ 
 \begin{align*}
@@ -44,7 +46,7 @@ $$
 	\end{align*}
 $$
 
-then suppose you think the best line is the one that minimizes
+then the best line is the one that minimizes
 
 $$
 	argmin_\beta (Y - X\beta)'(Y - X\beta).
@@ -69,12 +71,12 @@ $$
 
 The last step is kosher so long as $$X'X$$ is invertible.
 
-Take the data from the scatterplot above, and regard it as fixed. The contour plot below shows the value of $$\sum_i (y_i - (\beta_0 + \beta_1x_i))^2 = (Y - X \beta)'(Y - X\beta)$$ for differing values of $$\beta_0$$ and $$\beta_1$$. The tiny 'x' marks the unique minimum we just found, $$(X'X)^{-1}X'Y$$.
+Regarding the data in the scatterplot above as fixed, the contour plot below shows the value of $$\sum_i (y_i - (\beta_0 + \beta_1x_i))^2 = (Y - X \beta)'(Y - X\beta)$$ for differing values of $$\beta_0$$ and $$\beta_1$$. The tiny 'x' marks the unique minimum we just found, $$(X'X)^{-1}X'Y$$.
 ![Quadratic Loss]({{ "/images/ql.png"}})
 
 And the line through our points, which corresponds to that choice of $$\beta_0$$ and $$\beta_1$$, is drawn in the below picture.
 ![Points 'round a line]({{ "/images/graph.png" }} )
-Voila. That line is clearly best.
+Voila. 
 
 Notice there was nothing stochastic in anything above - no assumptions about a probability distribution governing $$Y$$ or $$X$$, or normally distributed epsilons or anything like that. If what you care about is quadratic loss, then $$\beta = (X'X)^{-1}X'Y$$ gives you the best line through your points, probability distributions be damned.
 
