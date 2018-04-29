@@ -66,8 +66,8 @@ $$
 	& \quad \qquad (X'X)^{-1}X'E(Y)Y'X(X'X)^{-1} - \\
 	& \quad \qquad (X'X)^{-1}X'YE(Y)'X(X'X)^{-1} + \\ 
 	& \quad \qquad (X'X)^{-1}X'E(Y)E(Y)'X(X'X)^{-1} | X] \\
-	&= (X'X)^{-1}X'E\big[YY' - E(Y)Y' - Y'E(Y)' + E(Y)E(Y)'\big]X(X'X)^{-1} \\
-	&= (X'X)^{-1}X'\underbrace{E\big[(Y - E(Y))(Y - E(Y))']}_{cov (Y)}X(X'X)^{-1} \\
+	&= (X'X)^{-1}X'E\big[YY' - E(Y)Y' - Y'E(Y)' + E(Y)E(Y)' | X \big]X(X'X)^{-1} \\
+	&= (X'X)^{-1}X'\underbrace{E\big[(Y - E(Y))(Y - E(Y))' | X]}_{cov (Y)}X(X'X)^{-1} \\
 	&= (X'X)^{-1}X'\sigma^2IX(X'X)^{-1} \\
 	&= \sigma^2 (X'X)^{-1}X'X(X'X)^{-1} \\
 	&= \sigma^2 (X'X)^{-1}
