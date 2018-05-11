@@ -5,17 +5,17 @@ date:   2018-04-22
 categories: regression
 ---
 
-If there is one thing statisticians are good at, it is drawing straight lines. (Peter Mueller deserves the credit for that -- he said in a lecture once.)
+If there is one thing statisticians are good at, it is drawing straight lines. (Peter Mueller deserves the credit for that -- he said it in a lecture once.)
 
 I write this partly to get the blog up and running, and partly because it's good to begin at the beginning.
 
 Suppose you have a graph that looks like this: 
 ![Scatter]({{"/images/no_line.png"}}) 
-And suppose you wanted to capture the data on that graph, as well as possible, using a linear function of $$x$$ -- i.e., something of the form $$\beta_0 + \beta_1 x$$. To help get the problem in mind, imagine that -- where each point on the graph is $$(x_i, y_i)$$ -- you would like a compatriot, who has access to all of the $$x_i$$'s, to be able to recover the values of the $$y_i$$. But imagine further that you only have enough bandwidth to transmit to your compatriot a slope and an intercept.
+And suppose you wanted to capture the data on that graph, as well as possible, using a linear function of $$x$$ -- i.e., something of the form $$\beta_0 + \beta_1 x$$. You might imagine that -- where each point on the graph is $$(x_i, y_i)$$ -- you would like a friend, who has access to all of the $$x_i$$'s, to be able to recover the values of the $$y_i$$. But you only have enough bandwidth to transmit to your compatriot a slope and an intercept.
 
-Now, suppose the cost you pay for the error in your compatriot's estimate of $$y_i$$ for a given $$x_i$$ is proportional to the squared error between her guess - based on the slope and intercept you provided -- and the true value of $$y_i$$.
+Now, suppose the cost you pay for any error in your friend's estimate of $$y_i$$ for a given $$x_i$$ is proportional to the squared error between her guess - based on the slope and intercept you provided -- and the true value of $$y_i$$.
 
-In this situation, the "best" line is the one that minimizes quadratic loss -- the sum of the squared vertical distances between each point and the line in question. So you want to find $$\beta_0$$ and $$\beta_1$$ which satisfy: 
+In that situation, the "best" line you could send to your friend is the one that minimizes quadratic loss -- the sum of the squared vertical distances between each point and the line in question. So you want to find $$\beta_0$$ and $$\beta_1$$ which satisfy: 
 
 $$ 
 \begin{align*}
@@ -71,7 +71,7 @@ $$
 
 The last step is kosher so long as $$X'X$$ is invertible.
 
-Regarding the data in the scatterplot above as fixed, the contour plot below shows the value of $$\sum_i (y_i - (\beta_0 + \beta_1x_i))^2 = (Y - X \beta)'(Y - X\beta)$$ for differing values of $$\beta_0$$ and $$\beta_1$$. The tiny 'x' marks the unique minimum we just found, $$(X'X)^{-1}X'Y$$.
+Regarding the data in the scatterplot above as fixed, the contour plot below shows the value of the quadratic loss function, $$\sum_i (y_i - (\beta_0 + \beta_1x_i))^2 = (Y - X \beta)'(Y - X\beta)$$ for differing values of $$\beta_0$$ and $$\beta_1$$. The tiny 'x' marks the unique minimum we just found, $$(X'X)^{-1}X'Y$$.
 ![Quadratic Loss]({{ "/images/ql.png"}})
 
 And the line through our points, which corresponds to that choice of $$\beta_0$$ and $$\beta_1$$, is drawn in the below picture.

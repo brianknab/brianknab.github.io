@@ -63,8 +63,9 @@
 <p>Namely, this one:
 <img src="/images/no_line.png" alt="Scatter" /></p>
 
-<p>And we regarded the points on that graph as fixed, and found the linear function of <script type="math/tex">x</script> which minimized quadratic loss for those points. And recall we assumed nothing stochastic; we were just minimizing a loss function taken over fixed data. And recall also that if we let
-<script type="math/tex">% <![CDATA[
+<p>And we regarded the points on that graph as fixed, and found the linear function of <script type="math/tex">x</script> which minimized quadratic loss for those points. Recall we assumed nothing stochastic; we were just minimizing a loss function taken over fixed data. And recall also that if we let</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
 \begin{align*}
 		Y = \begin{bmatrix}
 			y_1 \\
@@ -78,7 +79,7 @@
 			\vdots & \vdots \\
 			1 & x_n
 		\end{bmatrix}
-	\end{align*} %]]></script></p>
+	\end{align*} %]]></script>
 
 <p>then we found that the vector</p>
 
@@ -86,28 +87,28 @@
 
 <p>supplies the line which minimizes quadratic loss for our data. Its first element is the intercept, and its second is the slope.</p>
 
-<p>But typically, we do not think of our data as fixed. Instead, we see each data point as the realization of a chance process – a realization from a joint probability distribution, <script type="math/tex">P(x, y)</script>, governing <script type="math/tex">x</script> and <script type="math/tex">y</script>. (We might, for example, think of <script type="math/tex">x</script> as weight, and <script type="math/tex">y</script> as height, and then imagine selecting someone at random. <script type="math/tex">P(x,y)</script> would then describe the probability of selecting a person of weight <script type="math/tex">x</script> and height <script type="math/tex">y</script>.)</p>
+<p>But typically, we do not think of our data as fixed. Instead, we see each data point as a realization from a chance process – a realization from a joint probability distribution, <script type="math/tex">P(x, y)</script>, governing <script type="math/tex">x</script> and <script type="math/tex">y</script>. (We might, for example, think of <script type="math/tex">x</script> as weight, and <script type="math/tex">y</script> as height, and then imagine selecting someone at random. <script type="math/tex">P(x,y)</script> would then describe the probability of selecting a person of weight <script type="math/tex">x</script> and height <script type="math/tex">y</script>.)</p>
 
-<p>And if we do see our data as the realizations of a chance process, then we might wonder: if we had seen <em>alternative</em> realizations from <script type="math/tex">P(x,y)</script>, how would we expect our quadratic-loss-minimizing line to have differed? The below picture, for example, shows two 100 data point samples from the same underlying distribution on <script type="math/tex">x</script> and <script type="math/tex">y</script>, along with the quadratic-loss-minimizing lines for each:</p>
+<p>And if we do see our data as realizations from a chance process, then we might wonder: if we had seen <em>alternative</em> realizations from <script type="math/tex">P(x,y)</script>, how would we expect our quadratic-loss-minimizing line to have differed? The below picture, for example, shows two 100 data point samples from the same underlying distribution on <script type="math/tex">x</script> and <script type="math/tex">y</script>, along with the quadratic-loss-minimizing lines for each:</p>
 
 <p><img src="/images/two_samp_lines.png" alt="TwoSamplesWithLine" /></p>
 
 <p>Appreciate how they shift and vary.</p>
 
-<p>Now, we might <em>also</em> wonder: if we regard our <script type="math/tex">x</script>-values as <em>fixed</em>, how would we expect our quadratic-loss-minimizing line to have varied? That is, how ould we expect it to vary given alternative realizations from <script type="math/tex">P(y \vert x)</script>,</p>
+<p>And we might <em>also</em> wonder: if we regard our <script type="math/tex">x</script>-values as <em>fixed</em>, how would we expect our quadratic-loss-minimizing line to have varied? That is, how would we expect them to vary given alternative realizations from <script type="math/tex">P(y \vert x)</script>,</p>
 
 <p>The below picture shows 20 100-data point samples from the same distribution <script type="math/tex">P(y \vert x)</script>, along with quadratic-loss-minimizing lines for each:
 <img src="/images/lin_fit_lines.png" alt="Twenty Lines" /></p>
 
-<p>Appreciate, again, how they shift and vary. Notice also the vertical striations on the graph. These are a result of the fact that the vector of <script type="math/tex">x</script>-values is <em>fixed</em>, I’ve sampled <script type="math/tex">y</script> from around those fixed <script type="math/tex">x</script>-values.</p>
+<p>Appreciate, again, how they shift and vary. Notice also the vertical striations on the graph. These are a result of the fact that the vector of <script type="math/tex">x</script>-values is <em>fixed</em>, and I’ve sampled <script type="math/tex">y</script> from around those fixed <script type="math/tex">x</script>-values.</p>
 
-<p>So, the difference between the first question I asked – ‘how would I expect the lines to have vary if I saw alternative realizations from <script type="math/tex">P(x,y)</script>?’ – and the second question I asked – ‘how would I expect the lines to vary if I saw alternative realizations from <script type="math/tex">P(y \vert x)</script>?’ – is subtle. The first asks – across samples from <script type="math/tex">P(x,y)</script>, how do quadratic-loss-minimizers tend to vary. The second asks – across all samples from <script type="math/tex">P(x,y)</script> <em>where the vector of <script type="math/tex">x</script> values is equal to the vector of <script type="math/tex">x</script>-values I happened to witness</em> – how do quadratic-loss-minimizers tend to vary? Here, we’ll focus on this latter question, mostly because it’s easier to answer.</p>
+<p>So, the difference between the first question – ‘how would I expect the lines to vary if I saw alternative realizations from <script type="math/tex">P(x,y)</script>?’ – and the second question – ‘how would I expect the lines to vary if I saw alternative realizations from <script type="math/tex">P(y \vert x)</script>?’ – is subtle. The first asks – across samples from <script type="math/tex">P(x,y)</script>, how do quadratic-loss-minimizers tend to vary. The second asks – across all samples from <script type="math/tex">P(x,y)</script> <em>where the vector of <script type="math/tex">x</script> values is equal to the vector of <script type="math/tex">x</script>-values I happened to witness</em> – how do quadratic-loss-minimizers tend to vary? Here, we’ll focus on this latter question, mostly because it’s easier to answer, but also because it’s more relevant, given I saw the data I did.</p>
 
 <p>Now, without knowing the distribution <script type="math/tex">P(y \vert x)</script> it’s hard to say much about the variation we should expect in our quadratic-loss-minimizing lines. But we can make the problem tractable by imposing some additional constraints.</p>
 
-<p>Assume that, conditional on the vector of <script type="math/tex">x</script>-values, each response <script type="math/tex">y_i</script> is independent of every other response <script type="math/tex">y_j</script>.  Assume also that – again conditional on the vector of <script type="math/tex">x</script>-values – the variance of the responses <script type="math/tex">y_i</script> is constant, and denote that constant variance by ‘<script type="math/tex">\sigma^2</script>’.</p>
+<p>For example, assume that, conditional on the vector of <script type="math/tex">x</script>-values, each response <script type="math/tex">y_i</script> is independent of every other response <script type="math/tex">y_j</script>.  Assume also that – again conditional on the vector of <script type="math/tex">x</script>-values – the variance of the responses <script type="math/tex">y_i</script> is constant, and denote that constant variance by ‘<script type="math/tex">\sigma^2</script>’. In other words, assume that for the <script type="math/tex">Y</script> vector of <script type="math/tex">y_i</script>s <script type="math/tex">cov(Y \vert X) = \sigma^2 I</script>.</p>
 
-<p>Given those two assumptions, we can compute the covariance matrix of <script type="math/tex">\hat{\beta}</script> as follows:</p>
+<p>Given that assumption, we can compute the covariance matrix of <script type="math/tex">\hat{\beta}</script> as follows:</p>
 
 <script type="math/tex; mode=display">% <![CDATA[
 \begin{align*}
@@ -117,14 +118,14 @@
 	& \quad \qquad (X'X)^{-1}X'E(Y)Y'X(X'X)^{-1} - \\
 	& \quad \qquad (X'X)^{-1}X'YE(Y)'X(X'X)^{-1} + \\ 
 	& \quad \qquad (X'X)^{-1}X'E(Y)E(Y)'X(X'X)^{-1} | X] \\
-	&= (X'X)^{-1}X'E\big[YY' - E(Y)Y' - Y'E(Y)' + E(Y)E(Y)'\big]X(X'X)^{-1} \\
-	&= (X'X)^{-1}X'\underbrace{E\big[(Y - E(Y))(Y - E(Y))']}_{cov (Y)}X(X'X)^{-1} \\
+	&= (X'X)^{-1}X'E\big[YY' - E(Y)Y' - Y'E(Y)' + E(Y)E(Y)' | X \big]X(X'X)^{-1} \\
+	&= (X'X)^{-1}X'\underbrace{E\big[(Y - E(Y))(Y - E(Y))' | X]}_{cov (Y | X)}X(X'X)^{-1} \\
 	&= (X'X)^{-1}X'\sigma^2IX(X'X)^{-1} \\
 	&= \sigma^2 (X'X)^{-1}X'X(X'X)^{-1} \\
 	&= \sigma^2 (X'X)^{-1}
 \end{align*} %]]></script>
 
-<p>I think the generality of this result is somewhat surprising, because it only relies on conditional independence and constant variance. Consider, to see why I think it’s surprising, the below picture. It shows 20 100-data-point samples from a fixed-conditional-variance distribution, where <script type="math/tex">E(y \vert x) = x^3</script>, along with 20 corresponding quadratic-loss-minimizing lines:</p>
+<p>I think the generality of this result somewhat surprising, because it only relies on conditional independence and constant variance. Consider, to see why I think it’s surprising, the below picture. It shows 20 100-data-point samples from a fixed-conditional-variance distribution, where <script type="math/tex">E(y \vert x) = x^3</script>, along with 20 corresponding quadratic-loss-minimizing lines:</p>
 
 <p><img src="/images/cube_fit_lines.png" alt="Cube mean" /></p>
 
@@ -132,9 +133,9 @@
 
 <p><img src="/images/lin_fit_lines_cube_scale.png" alt="linear mean" /></p>
 
-<p>We see generally different slopes across the two plots. That’s not surprising. But consider: both plots are on the same scale, and the variation in the quadratic-loss-minimizing lines is (approximately) the same in both cases. This, despite the fact that the conditional mean of <script type="math/tex">y</script> is a much more complicated function of <script type="math/tex">x</script> in the former case as opposed to the latter.</p>
+<p>We see generally different slopes across the two plots. That’s not surprising. But consider: both plots are on the same scale, and the variation in the quadratic-loss-minimizing lines is (approximately) the same in both cases. This, despite the fact that the conditional mean of <script type="math/tex">y</script> is a much more complicated function of <script type="math/tex">x</script> in the former case than in the latter.</p>
 
-<p>I think that last <em>is</em> surprising. More precisely, what I think is surprising about the above result is that the covariance matrix of <script type="math/tex">\hat{\beta}</script> – which expresses the amount of variation in our quadratic-loss-minimizing lines – is independent of <script type="math/tex">E(y \vert x)</script> considered as a function of <script type="math/tex">x</script>. Under every such function the expected variation in your quadratic-loss-minimizing lines is the same.</p>
+<p>I think that last <em>is</em> surprising. More precisely, I think it surprising that the covariance matrix of <script type="math/tex">\hat{\beta}</script> – which expresses the amount of variation in our quadratic-loss-minimizing lines – is independent of <script type="math/tex">E(y \vert x)</script> considered as a function of <script type="math/tex">x</script>. Under every such function the expected variation in our quadratic-loss-minimizing lines is the same.</p>
 
 <p>That’s enough for now; something that is also surprising is that there is still (a lot) more to say about drawing straight lines through a crop of data points. So, still more to come on this.</p>
 
