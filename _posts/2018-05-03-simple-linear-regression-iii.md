@@ -5,14 +5,14 @@ date:   2018-05-11
 categories: regression
 ---
 
-In the last two posts, we first found the line that minimizes quadratic loss over a fixed data set. That line is given, again, by the vector:
+In the last two posts, I first found the line that minimizes quadratic loss over a fixed data set. That line is given, again, by the vector:
 
 $$
 	(X'X)^{-1}X'Y.
 $$
 
 
-We then treated $$Y$$ as a random object -- drawn from some distribution $$P(Y \vert X)$$, and showed that, if $$cov(Y) = \sigma^2 I$$, then $$cov((X'X)^{-1}X'Y) = \sigma^2 (X'X)^{-1}$$.
+We then treated $$Y$$ as a random object -- drawn from some distribution $$P(Y \vert X)$$, and I showed that, if $$cov(Y) = \sigma^2 I$$, then $$cov((X'X)^{-1}X'Y) = \sigma^2 (X'X)^{-1}$$.
 
 Now, let us further assume that the conditional mean $$E(Y \vert X)$$ is linear in $$X$$, i.e. that $$E(Y \vert X) = X\beta$$, where again: 
 
