@@ -16,9 +16,9 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.4.0 -->
-<title>Simple linear regression part one - nothing stochastic in sight | B K</title>
+<title>Simple linear regression part one - linear quadratic loss minimizer | B K</title>
 <meta name="generator" content="Jekyll v3.8.0" />
-<meta property="og:title" content="Simple linear regression part one - nothing stochastic in sight" />
+<meta property="og:title" content="Simple linear regression part one - linear quadratic loss minimizer" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="If there is one thing statisticians are good at, it is drawing straight lines. (Peter Mueller deserves the credit for that – he said it in a lecture once.)" />
 <meta property="og:description" content="If there is one thing statisticians are good at, it is drawing straight lines. (Peter Mueller deserves the credit for that – he said it in a lecture once.)" />
@@ -28,7 +28,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2018-04-22T00:00:00-05:00" />
 <script type="application/ld+json">
-{"url":"http://localhost:4000/regression/2018/04/22/simple-linear-regression.html","description":"If there is one thing statisticians are good at, it is drawing straight lines. (Peter Mueller deserves the credit for that – he said it in a lecture once.)","headline":"Simple linear regression part one - nothing stochastic in sight","datePublished":"2018-04-22T00:00:00-05:00","dateModified":"2018-04-22T00:00:00-05:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/regression/2018/04/22/simple-linear-regression.html"},"@context":"http://schema.org"}</script>
+{"url":"http://localhost:4000/regression/2018/04/22/simple-linear-regression.html","description":"If there is one thing statisticians are good at, it is drawing straight lines. (Peter Mueller deserves the credit for that – he said it in a lecture once.)","headline":"Simple linear regression part one - linear quadratic loss minimizer","datePublished":"2018-04-22T00:00:00-05:00","dateModified":"2018-04-22T00:00:00-05:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/regression/2018/04/22/simple-linear-regression.html"},"@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="B K" /></head>
 <body><header class="site-header" role="banner">
@@ -51,7 +51,7 @@
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Simple linear regression part one - nothing stochastic in sight</h1>
+    <h1 class="post-title p-name" itemprop="name headline">Simple linear regression part one - linear quadratic loss minimizer</h1>
     <p class="post-meta">
       <time class="dt-published" datetime="2018-04-22T00:00:00-05:00" itemprop="datePublished">Apr 22, 2018
       </time></p>
@@ -64,17 +64,17 @@
 
 <p>Suppose you have a graph that looks like this: 
 <img src="/images/no_line.png" alt="Scatter" /> 
-And suppose you wanted to capture the data on that graph, as well as possible, using a linear function of <script type="math/tex">x</script> – i.e., something of the form <script type="math/tex">\beta_0 + \beta_1 x</script>. You might imagine that – where each point on the graph is <script type="math/tex">(x_i, y_i)</script> – you would like a friend, who has access to all of the <script type="math/tex">x_i</script>’s, to be able to recover the values of the <script type="math/tex">y_i</script>. But you only have enough bandwidth to transmit to your compatriot a slope and an intercept.</p>
+And suppose you wanted to capture the data on that graph, as well as possible, using a linear function of <script type="math/tex">x</script> – i.e., something of the form <script type="math/tex">\beta_0 + \beta_1 x</script>. You might imagine that you would like a friend, who has access to all of the <script type="math/tex">x</script> values sof the points above, to be able to recover the corresponding <script type="math/tex">y</script> values, but that you only have enough bandwidth to transmit a slope and an intercept.</p>
 
-<p>Now, suppose the cost you pay for any error in your friend’s estimate of <script type="math/tex">y_i</script> for a given <script type="math/tex">x_i</script> is proportional to the squared error between her guess - based on the slope and intercept you provided – and the true value of <script type="math/tex">y_i</script>.</p>
+<p>Now, suppose further that the cost you pay for any error in your friend’s estimate is proportional to the squared error between her guess - based on the slope and intercept you provided – and the true <script type="math/tex">y</script> value.</p>
 
-<p>In that situation, the “best” line you could send to your friend is the one that minimizes quadratic loss – the sum of the squared vertical distances between each point and the line in question. So you want to find <script type="math/tex">\beta_0</script> and <script type="math/tex">\beta_1</script> which satisfy:</p>
+<p>In that situation, the “best” line is the one that minimizes quadratic loss – the sum of the squared vertical distances between each point and the line in question. So you want to find <script type="math/tex">\beta_0</script> and <script type="math/tex">\beta_1</script> which satisfy:</p>
 
 <script type="math/tex; mode=display">\begin{align*}
 	argmin_{\beta_0, \beta_1} \sum_i (y_i - (\beta_0 + \beta_1x_i))^2
 \end{align*}</script>
 
-<p>Equivalently, if</p>
+<p>Equivalently, if we let</p>
 
 <script type="math/tex; mode=display">% <![CDATA[
 \begin{align*}
@@ -100,7 +100,7 @@ And suppose you wanted to capture the data on that graph, as well as possible, u
 
 <script type="math/tex; mode=display">argmin_\beta (Y - X\beta)'(Y - X\beta).</script>
 
-<p>Notice, because <script type="math/tex">\beta'X'Y</script> is a scalar, and hence because <script type="math/tex">(\beta'X'Y)' = Y'X\beta = \beta'X'Y</script>,</p>
+<p>To find that minimum, first notice that because <script type="math/tex">\beta'X'Y</script> is a scalar, and hence because <script type="math/tex">(\beta'X'Y)' = Y'X\beta = \beta'X'Y</script>,</p>
 
 <script type="math/tex; mode=display">% <![CDATA[
 \begin{align*}

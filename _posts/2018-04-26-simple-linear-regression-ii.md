@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Simple linear regression part two - with stochasticity this time"
+title:  "Simple linear regression part two - finding the covariance of the quadratic loss minimizing line under homoskedasticity"
 date:   2018-04-26
 categories: regression
 ---
@@ -43,18 +43,18 @@ And if we do see our data as realizations from a chance process, then we might w
 
 Appreciate how they shift and vary.
 
-And we might _also_ wonder: if we regard our $$x$$-values as _fixed_, how would we expect our quadratic-loss-minimizing line to have varied? That is, how would we expect them to vary given alternative realizations from $$P(y \vert x)$$,
+Now, we might _also_ wonder: if we regard our $$x$$-values as _fixed_, how would we expect our quadratic-loss-minimizing line to have varied? That is, how would we expect them to vary given alternative realizations from $$P(y \vert x)$$?
 
 The below picture shows 20 100-data point samples from the same distribution $$P(y \vert x)$$, along with quadratic-loss-minimizing lines for each:
 ![Twenty Lines]({{"/images/lin_fit_lines.png"}})
 
-Appreciate, again, how they shift and vary. Notice also the vertical striations on the graph. These are a result of the fact that the vector of $$x$$-values is _fixed_, and I've sampled $$y$$ from around those fixed $$x$$-values.
+Appreciate, again, how they shift and vary. Notice also the vertical striations in the data on the graph. These are a result of the fact that the vector of $$x$$-values is _fixed_, and I've sampled $$y$$ from around those fixed $$x$$-values.
 
-So, the difference between the first question -- 'how would I expect the lines to vary if I saw alternative realizations from $$P(x,y)$$?' -- and the second question -- 'how would I expect the lines to vary if I saw alternative realizations from $$P(y \vert x)$$?' -- is subtle. The first asks -- across samples from $$P(x,y)$$, how do quadratic-loss-minimizers tend to vary. The second asks -- across all samples from $$P(x,y)$$ _where the vector of $$x$$ values is equal to the vector of $$x$$-values I happened to witness_ -- how do quadratic-loss-minimizers tend to vary? Here, we'll focus on this latter question, mostly because it's easier to answer, but also because it's more relevant, given I saw the data I did.
+The difference between the first question -- 'how would I expect the lines to vary if I saw alternative realizations from $$P(x,y)$$?' -- and the second question -- 'how would I expect the lines to vary if I saw alternative realizations from $$P(y \vert x)$$?' -- is subtle. The first asks -- across samples from $$P(x,y)$$, how do quadratic-loss-minimizers tend to vary. The second asks -- across all samples from $$P(x,y)$$ _where the vector of $$x$$ values is equal to the vector of $$x$$-values I happened to witness_ -- how do quadratic-loss-minimizers tend to vary? Here, we'll focus on this latter question, mostly because it's easier to answer, but also because it's more relevant, given we saw the data we did.
 
 Now, without knowing the distribution $$P(y \vert x)$$ it's hard to say much about the variation we should expect in our quadratic-loss-minimizing lines. But we can make the problem tractable by imposing some additional constraints.
 
-For example, assume that, conditional on the vector of $$x$$-values, each response $$y_i$$ is independent of every other response $$y_j$$.  Assume also that -- again conditional on the vector of $$x$$-values -- the variance of the responses $$y_i$$ is constant, and denote that constant variance by '$$\sigma^2$$'. In other words, assume that for the $$Y$$ vector of $$y_i$$s $$cov(Y \vert X) = \sigma^2 I$$.
+For example, assume that, conditional on the vector of $$x$$-values, each response $$y_i$$ is independent of every other response $$y_j$$.  Assume also that -- again conditional on the vector of $$x$$-values -- the variance of the responses $$y_i$$ is constant, and denote that constant variance by '$$\sigma^2$$'. In other words, assume that for the vector $$Y$$ of $$y$$ values, $$cov(Y \vert X) = \sigma^2 I$$.
 
 Given that assumption, we can compute the covariance matrix of $$\hat{\beta}$$ as follows:
 
@@ -74,7 +74,7 @@ $$
 \end{align*}
 $$
 
-I think the generality of this result somewhat surprising, because it only relies on conditional independence and constant variance. Consider, to see why I think it's surprising, the below picture. It shows 20 100-data-point samples from a fixed-conditional-variance distribution, where $$E(y \vert x) = x^3$$, along with 20 corresponding quadratic-loss-minimizing lines: 
+I think the generality of this result somewhat surprising, because it only relies on conditional independence and constant variance. Consider the below picture. It shows 20 100-data-point samples from a fixed-conditional-variance distribution, where $$E(y \vert x) = x^3$$, along with 20 corresponding quadratic-loss-minimizing lines: 
 
 ![Cube mean]({{"/images/cube_fit_lines.png"}})
 
@@ -86,7 +86,7 @@ We see generally different slopes across the two plots. That's not surprising. B
 
 I think that last _is_ surprising. More precisely, I think it surprising that the covariance matrix of $$\hat{\beta}$$ -- which expresses the amount of variation in our quadratic-loss-minimizing lines -- is independent of $$E(y \vert x)$$ considered as a function of $$x$$. Under every such function the expected variation in our quadratic-loss-minimizing lines is the same.
 
-That's enough for now; something that is also surprising is that there is still (a lot) more to say about drawing straight lines through a crop of data points. So, still more to come on this.
+That's enough for now; something that is also surprising is that there is still more to say about drawing straight lines through a crop of data points. So, still more to come on this.
 
 
 
@@ -109,12 +109,16 @@ X <- matrix(c(rep(1, 100), rnorm(100)), ncol = 2)
 ## and compute quadratic-loss-minimizers
 for (i in seq(1:20)){
   Y <- rnorm(100, mean = X[,2])
-  df <- rbind.data.frame(df, cbind.data.frame(x = X[,2], y = Y, iter = i))
+  df <- rbind.data.frame(df, cbind.data.frame(x = X[,2], 
+  					      y = Y, 
+  					      iter = i))
   
 ## Find (X'X)^(-1)X'Y.
   bh <- solve(t(X) %*% X) %*% t(X) %*% Y
   beta_hat <- rbind.data.frame(beta_hat, 
-                               cbind.data.frame(intercept = bh[1], slope = bh[2], iter = i))
+                               cbind.data.frame(intercept = bh[1], 
+                               slope = bh[2], 
+                               iter = i))
 }
 
 ## Plot the samples along with their quadratic-loss-minimizers.

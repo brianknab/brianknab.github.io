@@ -1,20 +1,20 @@
 ---
 layout: post
-title:  "Simple linear regression part three - wrapping up"
+title:  "Simple linear regression part three - if the mean is linear, the quadratic loss minimizing line is an unbiased estimate of that mean. A normal response yields normality in the quadratic loss minimizer."
 date:   2018-05-11
 categories: regression
 ---
 
-In the last two posts, I first found the line that minimizes quadratic loss over a fixed data set. That line is given, again, by the vector:
+In the last two posts, I first found the line that minimizes quadratic loss over a fixed data set. That line, again, is given by the vector:
 
 $$
 	(X'X)^{-1}X'Y.
 $$
 
 
-We then treated $$Y$$ as a random object -- drawn from some distribution $$P(Y \vert X)$$, and I showed that, if $$cov(Y) = \sigma^2 I$$, then $$cov((X'X)^{-1}X'Y) = \sigma^2 (X'X)^{-1}$$.
+We then regarded $$Y$$ as a random object -- drawn from some distribution $$P(Y \vert X)$$, and showed that, if $$cov(Y) = \sigma^2 I$$, then $$cov[(X'X)^{-1}X'Y] = \sigma^2 (X'X)^{-1}$$.
 
-Now, let us further assume that the conditional mean $$E(Y \vert X)$$ is linear in $$X$$, i.e. that $$E(Y \vert X) = X\beta$$, where again: 
+Now, let us make additional assumptions.  Let us assume that the conditional mean $$E(Y \vert X)$$ is linear in $$X$$, i.e. that $$E(Y \vert X) = X\beta$$, where again: 
 
 $$
 	\begin{align*}
@@ -41,21 +41,17 @@ Then notice that
 
 $$
 \begin{align*}
-	E[(X'X)^{-1}X'Y] &= (X'X)^{-1}X'E(Y) \\
+	E[(X'X)^{-1}X'Y \vert X] &= (X'X)^{-1}X'E(Y) \\
 	&= (X'X)^{-1}X'X\beta \\
 	&= \beta
 \end{align*}
 $$
 
-What have we shown? We've shown that if, in fact, the conditional mean of $$Y$$ given $$X$$ is linear in $$X$$, then $$(X'X)^{-1}X'Y$$ is an unbiased estimate of that conditional mean. 
+So if, in fact, the conditional mean of $$Y$$ given $$X$$ is linear in $$X$$, then $$X(X'X)^{-1}X'Y$$ is an unbiased estimate of that conditional mean. 
 
-To wrap up then:
-	
-1. Ignoring stochasticity altogether, $$(X'X)^{-1}X'Y$$ minimizes quadratic loss over any fixed data set.
+Further, if we assume that each of the $$y_i$$'s is normally distributed around its respective mean. Then because any linear combination of independent normally distributed random variables is itself normally distributed, $$(X'X)^{-1}X'Y$$ is also normally distributed; and hence by our earlier results 
 
-2. If we assume conditional independence and homoskedasticity (constant variance) in the $$y_i$$'s' -- i.e., if we assume $$ cov(Y) = \sigma^2 I$$ -- then $$cov((X'X)^{-1}X'Y \vert X) = \sigma^2(X'X)^{-1}$$.
+$$\hat{\beta} = (X'X)^{-1}X'Y \sim N(\beta, \sigma^2(X'X)^{-1})$$
 
-3.  $$(X'X)^{-1}X'Y$$ is an unbiased estimate of the conditional mean of $$Y$$ given $$X$$, if that conditional mean is in fact linear in $$X$$.
 
-And I think that's the standard intro to the simple linear regression model. 
 
