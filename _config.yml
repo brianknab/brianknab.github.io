@@ -26,6 +26,7 @@ url: "HTTPS://brianknab.github.io" # the base hostname & protocol for your site,
 # Build settings
 markdown: kramdown
 theme: minima
+google_analytics: UA-89095798-1
 plugins:
   - jekyll-feed
 
