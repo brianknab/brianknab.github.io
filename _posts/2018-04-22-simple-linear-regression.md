@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Simple linear regression part one - linear quadratic loss minimizer"
+title:  "Linear regression part one - linear quadratic loss minimizer"
 date:   2018-04-22
 categories: regression
 ---
@@ -11,7 +11,7 @@ I write this partly to get the blog up and running, and partly because it's good
 
 Suppose you have a graph that looks like this: 
 ![Scatter]({{"/images/no_line.png"}}) 
-And suppose you wanted to capture the data on that graph, as well as possible, using a linear function of $$x$$ -- i.e., something of the form $$\beta_0 + \beta_1 x$$. You might imagine that you would like a friend, who has access to all of the $$x$$ values sof the points above, to be able to recover the corresponding $$y$$ values, but that you only have enough bandwidth to transmit a slope and an intercept.
+And suppose you wanted to capture the data on that graph, as well as possible, using a linear function of $$x$$ -- i.e., something of the form $$\beta_0 + \beta_1 x$$. You might imagine that you would like a friend, who has access to all of the $$x$$ values of the points above, to recover the corresponding $$y$$ values, but that you only have enough bandwidth to transmit a slope and an intercept.
 
 Now, suppose further that the cost you pay for any error in your friend's estimate is proportional to the squared error between her guess - based on the slope and intercept you provided -- and the true $$y$$ value.
 

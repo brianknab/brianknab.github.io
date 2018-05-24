@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Simple linear regression part three - if the mean is linear, the quadratic loss minimizing line is an unbiased estimate of that mean. A normal response yields normality in the quadratic loss minimizer."
+title:  "Linear regression part three - if the mean is linear, the quadratic loss minimizing line is an unbiased estimate of that mean. A normal response yields normality in the quadratic loss minimizer."
 date:   2018-05-11
 categories: regression
 ---

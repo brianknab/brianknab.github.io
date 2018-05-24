@@ -1,10 +1,11 @@
 ---
 layout: post
-title:  "Linear regression part four - Finding an unbiased estimate of the variance."
+title:  "Linear regression part four - Finding an unbiased estimate of the variance in the linear model"
+date: "2018-05-23"
 categories: regression
 ---
 
-Borrowing heavily from Christensen, _Plane Answers to Complex Questions_, regard each column of $$X$$ as a vector in $$\mathbb{R}^n$$, and consider $$C(X)$$ -- the column space of $$X$$ -- i.e. the subspace of $$\mathbb{R}^n$$ spanned by the columns of $$X$$. 
+(Here, I borrow heavily from Christensen, _Plane Answers to Complex Questions_.) Regard each column of $$X$$ as a vector in $$\mathbb{R}^n$$, and consider $$C(X)$$ -- the column space of $$X$$ -- i.e. the subspace of $$\mathbb{R}^n$$ spanned by the columns of $$X$$. 
 
 Define the perpendicular projection operator $$M$$ onto $$C(X)$$ as follows: if $$v$$ is in $$C(X)$$, then $$Mv = v$$. And if $$v$$ is in the space perpendicular to $$C(X)$$ then $$Mv = 0$$. 
 

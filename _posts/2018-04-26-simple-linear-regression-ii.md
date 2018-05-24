@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Simple linear regression part two - finding the covariance of the quadratic loss minimizing line under homoskedasticity"
+title:  "Linear regression part two - finding the covariance of the quadratic loss minimizing line under homoskedasticity"
 date:   2018-04-26
 categories: regression
 ---
