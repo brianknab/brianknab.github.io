@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Linear regression part one - linear quadratic loss minimizer"
+title:  "Linear regression part one - linear quadratic loss minimizer."
 date:   2018-04-22
 categories: regression
 ---

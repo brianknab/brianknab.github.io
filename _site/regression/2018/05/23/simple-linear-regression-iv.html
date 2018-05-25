@@ -6,22 +6,21 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.4.0 -->
-<title>Linear regression part four - Finding an unbiased estimate of the variance in the linear model | B K</title>
+<title>Linear regression part four - Finding an unbiased estimate of the variance in the linear model. | B K</title>
 <meta name="generator" content="Jekyll v3.8.0" />
-<meta property="og:title" content="Linear regression part four - Finding an unbiased estimate of the variance in the linear model" />
+<meta property="og:title" content="Linear regression part four - Finding an unbiased estimate of the variance in the linear model." />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="(Here, I borrow heavily from Christensen, Plane Answers to Complex Questions.) Regard each column of as a vector in , and consider – the column space of – i.e. the subspace of spanned by the columns of ." />
-<meta property="og:description" content="(Here, I borrow heavily from Christensen, Plane Answers to Complex Questions.) Regard each column of as a vector in , and consider – the column space of – i.e. the subspace of spanned by the columns of ." />
+<meta name="description" content="(Here, I borrow heavily from Christensen, Plane Answers to Complex Questions.) Consider again the linear model" />
+<meta property="og:description" content="(Here, I borrow heavily from Christensen, Plane Answers to Complex Questions.) Consider again the linear model" />
 <link rel="canonical" href="http://localhost:4000/regression/2018/05/23/simple-linear-regression-iv.html" />
 <meta property="og:url" content="http://localhost:4000/regression/2018/05/23/simple-linear-regression-iv.html" />
 <meta property="og:site_name" content="B K" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2018-05-23T00:00:00-05:00" />
 <script type="application/ld+json">
-{"url":"http://localhost:4000/regression/2018/05/23/simple-linear-regression-iv.html","description":"(Here, I borrow heavily from Christensen, Plane Answers to Complex Questions.) Regard each column of as a vector in , and consider – the column space of – i.e. the subspace of spanned by the columns of .","headline":"Linear regression part four - Finding an unbiased estimate of the variance in the linear model","datePublished":"2018-05-23T00:00:00-05:00","dateModified":"2018-05-23T00:00:00-05:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/regression/2018/05/23/simple-linear-regression-iv.html"},"@context":"http://schema.org"}</script>
+{"url":"http://localhost:4000/regression/2018/05/23/simple-linear-regression-iv.html","description":"(Here, I borrow heavily from Christensen, Plane Answers to Complex Questions.) Consider again the linear model","headline":"Linear regression part four - Finding an unbiased estimate of the variance in the linear model.","datePublished":"2018-05-23T00:00:00-05:00","dateModified":"2018-05-23T00:00:00-05:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/regression/2018/05/23/simple-linear-regression-iv.html"},"@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="B K" /></head>
-<body><header class="site-header" role="banner">
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="B K" /></head><body><header class="site-header" role="banner">
 
   <div class="wrapper"><a class="site-title" rel="author" href="/">B K</a><nav class="site-nav">
         <input type="checkbox" id="nav-trigger" class="nav-trigger" />
@@ -41,16 +40,22 @@
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Linear regression part four - Finding an unbiased estimate of the variance in the linear model</h1>
+    <h1 class="post-title p-name" itemprop="name headline">Linear regression part four - Finding an unbiased estimate of the variance in the linear model.</h1>
     <p class="post-meta">
       <time class="dt-published" datetime="2018-05-23T00:00:00-05:00" itemprop="datePublished">May 23, 2018
       </time></p>
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>(Here, I borrow heavily from Christensen, <em>Plane Answers to Complex Questions</em>.) Regard each column of <script type="math/tex">X</script> as a vector in <script type="math/tex">\mathbb{R}^n</script>, and consider <script type="math/tex">C(X)</script> – the column space of <script type="math/tex">X</script> – i.e. the subspace of <script type="math/tex">\mathbb{R}^n</script> spanned by the columns of <script type="math/tex">X</script>.</p>
+    <p>(Here, I borrow heavily from Christensen, <em>Plane Answers to Complex Questions</em>.) Consider again the linear model</p>
+
+<script type="math/tex; mode=display">E(Y|X) = X\beta.</script>
+
+<p>Now, regard each column of <script type="math/tex">X</script> as a vector in <script type="math/tex">\mathbb{R}^n</script>, and consider <script type="math/tex">C(X)</script> – the column space of <script type="math/tex">X</script> – i.e. the subspace of <script type="math/tex">\mathbb{R}^n</script> spanned by the columns of <script type="math/tex">X</script>.</p>
 
 <p>Define the perpendicular projection operator <script type="math/tex">M</script> onto <script type="math/tex">C(X)</script> as follows: if <script type="math/tex">v</script> is in <script type="math/tex">C(X)</script>, then <script type="math/tex">Mv = v</script>. And if <script type="math/tex">v</script> is in the space perpendicular to <script type="math/tex">C(X)</script> then <script type="math/tex">Mv = 0</script>.</p>
+
+<p>We need three lemmas.</p>
 
 <p><strong>Lemma 1:</strong> <script type="math/tex">X(X'X)^{-1}X'</script> is the perpendicular projection operator onto <script type="math/tex">C(X)</script>.</p>
 
@@ -64,13 +69,13 @@
 
 <script type="math/tex; mode=display">\tag*{$\Box$}</script>
 
-<p><strong>Lemma 2:</strong> if <script type="math/tex">M</script> is the p.p.o. onto <script type="math/tex">C(X)</script>, then <script type="math/tex">tr(M) = r(X)</script> – the trace of <script type="math/tex">M</script> is the rank of <script type="math/tex">X</script>.</p>
+<p><strong>Lemma 2:</strong> If <script type="math/tex">M</script> is the p.p.o. onto <script type="math/tex">C(X)</script>, then <script type="math/tex">tr(M) = r(X)</script> – the trace of <script type="math/tex">M</script> is the rank of <script type="math/tex">X</script>.</p>
 
 <p><strong>Proof:</strong> Recall two things:</p>
 
 <ol>
   <li>
-    <p>if <script type="math/tex">Av = \lambda v</script>, where <script type="math/tex">A</script> is a square matrix, then <script type="math/tex">v</script> is an eigenvector of <script type="math/tex">A</script>, and <script type="math/tex">\lambda</script> is the associated eigenvalue. The multiplicity of the eigenvalue <script type="math/tex">\lambda</script> is the number of linearly independent vectors <script type="math/tex">v</script> such that <script type="math/tex">Av = \lambda v,</script> and the total number of eigenvalues of an <script type="math/tex">n \times n</script> matrix is <script type="math/tex">n</script>.</p>
+    <p>If <script type="math/tex">Av = \lambda v</script>, where <script type="math/tex">A</script> is a square matrix, then <script type="math/tex">v</script> is an eigenvector of <script type="math/tex">A</script>, and <script type="math/tex">\lambda</script> is the associated eigenvalue. The multiplicity of the eigenvalue <script type="math/tex">\lambda</script> is the number of linearly independent vectors <script type="math/tex">v</script> such that <script type="math/tex">Av = \lambda v,</script> and the total number of eigenvalues of an <script type="math/tex">n \times n</script> matrix is <script type="math/tex">n</script>.</p>
   </li>
   <li>
     <p>Any symmetric matrix <script type="math/tex">A</script> admits of a <em>singular value decomposition</em>: <script type="math/tex">A=P'DP</script>, where <script type="math/tex">P</script> is an orthogonal matrix (<script type="math/tex">P'P = I</script>), and <script type="math/tex">D</script> is a diagonal matrix, with diagonal entries the eigenvalues of <script type="math/tex">A</script>.</p>
@@ -81,7 +86,7 @@
 
 <p>Further, if <script type="math/tex">v</script> is in the space perpendicular to <script type="math/tex">C(X)</script>, then <script type="math/tex">Mv = 0v.</script> So <script type="math/tex">0</script> is another eigenvalue of <script type="math/tex">M</script>, and its multiplicity is, similarly to the above, the dimension of the space perpendicular to <script type="math/tex">C(X)</script>. And that characterizes all of the eigenvalues of <script type="math/tex">M</script>.</p>
 
-<p>Note that <script type="math/tex">M = X'(X'X)^{-1}X</script> is symmetric – <script type="math/tex">(X'(X'X)^{-1}X)' = X'(X'X)^{-1}X</script> – so</p>
+<p>Note finally that <script type="math/tex">M = X'(X'X)^{-1}X</script> is symmetric, so</p>
 
 <p><script type="math/tex">tr(M) = tr(P'DP) = tr(DP'P) = \sum_i \lambda_i = \underbrace{1 + 1 + \ldots  + 1}_{r(X) \text{ times}} + 0 + 0 + \ldots + 0 = r(X)</script>
 <script type="math/tex">\tag*{$\Box$}</script></p>
@@ -90,7 +95,7 @@
 
 <script type="math/tex; mode=display">E(Y'AY) = tr(A cov(Y)) + E(Y)'AE(Y)</script>
 
-<p><strong>Proof:</strong>  First, recognize that <script type="math/tex">Y'AY</script> is a scalar. Hence <script type="math/tex">tr(Y'AY) = Y'AY</script>. Second, note</p>
+<p><strong>Proof:</strong>  First, recognize that where <script type="math/tex">A</script> is any square matrix, <script type="math/tex">[Y - E(Y)]'A[Y - E(Y)]</script> is a scalar. Hence <script type="math/tex">tr([Y - E(Y)]'A[Y - E(Y)]) = [Y - E(Y)]'A[Y - E(Y)]</script>. Second, note</p>
 
 <script type="math/tex; mode=display">% <![CDATA[
 \begin{align*}
@@ -144,7 +149,7 @@
 
 <script type="math/tex; mode=display">E(SSE) = (n - p)\sigma^2</script>
 
-<p>Or in other words, <script type="math/tex">\frac{1}{n -p} SSE</script> is an unbiased estimator of <script type="math/tex">\sigma^2</script>.</p>
+<p>Or in other words, <script type="math/tex">\frac{1}{n -p} SSE</script> is an unbiased estimator of <script type="math/tex">\sigma^2</script>, where <script type="math/tex">p</script> is the rank of <script type="math/tex">X</script>.</p>
 
   </div><a class="u-url" href="/regression/2018/05/23/simple-linear-regression-iv.html" hidden></a>
 </article>

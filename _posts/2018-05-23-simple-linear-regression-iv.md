@@ -1,13 +1,20 @@
 ---
 layout: post
-title:  "Linear regression part four - Finding an unbiased estimate of the variance in the linear model"
+title:  "Linear regression part four - Finding an unbiased estimate of the variance in the linear model."
 date: "2018-05-23"
 categories: regression
 ---
 
-(Here, I borrow heavily from Christensen, _Plane Answers to Complex Questions_.) Regard each column of $$X$$ as a vector in $$\mathbb{R}^n$$, and consider $$C(X)$$ -- the column space of $$X$$ -- i.e. the subspace of $$\mathbb{R}^n$$ spanned by the columns of $$X$$. 
+(Here, I borrow heavily from Christensen, _Plane Answers to Complex Questions_.) Consider again the linear model 
+
+$$ E(Y|X) = X\beta. $$
+
+Now, regard each column of $$X$$ as a vector in $$\mathbb{R}^n$$, and consider $$C(X)$$ -- the column space of $$X$$ -- i.e. the subspace of $$\mathbb{R}^n$$ spanned by the columns of $$X$$. 
 
 Define the perpendicular projection operator $$M$$ onto $$C(X)$$ as follows: if $$v$$ is in $$C(X)$$, then $$Mv = v$$. And if $$v$$ is in the space perpendicular to $$C(X)$$ then $$Mv = 0$$. 
+
+
+We need three lemmas.
 
 **Lemma 1:** $$X(X'X)^{-1}X'$$ is the perpendicular projection operator onto $$C(X)$$. 
 
@@ -29,11 +36,11 @@ $$
 
 $$\tag*{$\Box$}$$
 
-**Lemma 2:** if $$M$$ is the p.p.o. onto $$C(X)$$, then $$tr(M) = r(X)$$ -- the trace of $$M$$ is the rank of $$X$$.
+**Lemma 2:** If $$M$$ is the p.p.o. onto $$C(X)$$, then $$tr(M) = r(X)$$ -- the trace of $$M$$ is the rank of $$X$$.
 
 **Proof:** Recall two things:
 
-1. if $$Av = \lambda v$$, where $$A$$ is a square matrix, then $$v$$ is an eigenvector of $$A$$, and $$\lambda$$ is the associated eigenvalue. The multiplicity of the eigenvalue $$\lambda$$ is the number of linearly independent vectors $$v$$ such that $$Av = \lambda v,$$ and the total number of eigenvalues of an $$n \times n$$ matrix is $$n$$.
+1. If $$Av = \lambda v$$, where $$A$$ is a square matrix, then $$v$$ is an eigenvector of $$A$$, and $$\lambda$$ is the associated eigenvalue. The multiplicity of the eigenvalue $$\lambda$$ is the number of linearly independent vectors $$v$$ such that $$Av = \lambda v,$$ and the total number of eigenvalues of an $$n \times n$$ matrix is $$n$$.
 
 2. Any symmetric matrix $$A$$ admits of a _singular value decomposition_: $$A=P'DP$$, where $$P$$ is an orthogonal matrix ($$P'P = I$$), and $$D$$ is a diagonal matrix, with diagonal entries the eigenvalues of $$A$$.
 
@@ -41,7 +48,7 @@ Now, by definition, if $$v$$ is in $$C(X)$$, then $$Mv = v$$. Hence $$1$$ is an 
 
 Further, if $$v$$ is in the space perpendicular to $$C(X)$$, then $$Mv = 0v.$$ So $$0$$ is another eigenvalue of $$M$$, and its multiplicity is, similarly to the above, the dimension of the space perpendicular to $$C(X)$$. And that characterizes all of the eigenvalues of $$M$$.
 
-Note that $$M = X'(X'X)^{-1}X$$ is symmetric -- $$(X'(X'X)^{-1}X)' = X'(X'X)^{-1}X$$ -- so 
+Note finally that $$M = X'(X'X)^{-1}X$$ is symmetric, so 
 
 $$tr(M) = tr(P'DP) = tr(DP'P) = \sum_i \lambda_i = \underbrace{1 + 1 + \ldots  + 1}_{r(X) \text{ times}} + 0 + 0 + \ldots + 0 = r(X)$$
 $$\tag*{$\Box$}$$
@@ -52,7 +59,7 @@ $$\tag*{$\Box$}$$
 $$E(Y'AY) = tr(A cov(Y)) + E(Y)'AE(Y)$$
 
 
-**Proof:**  First, recognize that $$Y'AY$$ is a scalar. Hence $$tr(Y'AY) = Y'AY$$. Second, note
+**Proof:**  First, recognize that where $$A$$ is any square matrix, $$[Y - E(Y)]'A[Y - E(Y)]$$ is a scalar. Hence $$tr([Y - E(Y)]'A[Y - E(Y)]) = [Y - E(Y)]'A[Y - E(Y)]$$. Second, note
 
 $$
 \begin{align*}
@@ -113,4 +120,4 @@ Hence
 
 $$ E(SSE) = (n - p)\sigma^2 $$
 
-Or in other words, $$\frac{1}{n -p} SSE$$ is an unbiased estimator of $$\sigma^2$$. 
+Or in other words, $$\frac{1}{n -p} SSE$$ is an unbiased estimator of $$\sigma^2$$, where $$p$$ is the rank of $$X$$. 
